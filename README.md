@@ -18,9 +18,9 @@ Es posible que cuando quieras correr el proyecto te salga un mensaje mencionando
 npm install
 ```
 
-## Servidor de desarrollo
+## Correr el proyecto
 
-Para iniciar un servidor de desarrollo local, ejecuta:
+Para correr el proyecto de forma local, ejecuta:
 
 ```bash
 ng serve
