@@ -2,6 +2,22 @@
 
 Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 19.2.15.
 
+Para los estilos (CSS) del proyecto, se está usando TailWind CSS en su version 3.4.3
+
+Si no tienes TailWind CSS instalado o si tienes la version 4.0 o superior, ejecuta este comando dentro de la carpeta del proyecto para instalar TailWind:
+
+```bash
+npm install tailwindcss@3.4.3 postcss autoprefixer
+```
+
+## IMPORTANTE: Antes de correr el proyecto angular
+
+Es posible que cuando quieras correr el proyecto te salga un mensaje mencionando que los packages de Node no están instalados, en ese caso dentro de la carpeta del proyecto pongan este comando, debería solucionarlo:
+
+```bash
+npm install
+```
+
 ## Servidor de desarrollo
 
 Para iniciar un servidor de desarrollo local, ejecuta:
