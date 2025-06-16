@@ -1,0 +1,135 @@
+/* Estilos para el header del home */
+.home-header {
+  background-color: #FFE6FF;
+  font-family: 'Bree Serif', serif;
+  width: 100%;
+}
+
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.home-nav a {
+  font-family: 'Bree Serif', serif;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  font-size: 1.125rem;
+  text-decoration: none;
+}
+
+.btn-ingresa {
+  background-color: #FF48FF;
+  color: #000000;
+  font-family: 'Bree Serif', serif;
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+  border-radius: 15px; /* rounded-full */
+}
+
+.btn-registro {
+  background-color: #B511B5;
+  color: white;
+  font-family: 'Bree Serif', serif;
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+  border-radius: 15px;
+}
+
+/* Intro */
+.intro-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 3rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .intro-section {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.intro-title {
+  font-size: 2.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  line-height: 1.3;
+}
+
+.intro-paragraph {
+  font-family: 'Bree Serif', serif;
+  margin-top: 1.5rem;
+  font-size: 1.125rem;
+}
+
+/* Funcionalidades */
+.funcionalidades {
+  background-color: #F1EFEF;
+  padding: 4rem 1.5rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .func-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.func-card {
+  background-color: #D9D9D9;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.funcionalidades p {
+  font-family: 'Bree Serif', serif;
+}
+
+/* Acerca de */
+.acerca-de {
+  padding: 4rem 1.5rem;
+}
+
+.acerca-de h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.25rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.acerca-content {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .acerca-content {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+}
+
+.acerca-content h3 {
+  font-family: 'Bree Serif', serif;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.acerca-content p {
+  font-family: 'Bree Serif', serif;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Footer */
+.home-footer {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 2rem 1rem;
+  font-family: 'Bree Serif', serif;
+  font-size: 0.875rem;
+}

@@ -1,0 +1,95 @@
+<header class="bg-pinkfigma text-black px-6 py-4 shadow-md sticky top-0 z-50 font-bree">
+  <div class="flex justify-between items-center">
+    <!-- Logo -->
+    <div class="flex items-center gap-2">
+      <img src="/Logo.png" alt="logo" class="w-10 h-10" />
+      <span class="text-xl font-poppins font-bold">MusiConnect</span>
+    </div>
+
+    <!-- Botón hamburguesa -->
+    <button class="lg:hidden" (click)="toggleMenu()">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <!-- Menú grande -->
+    <nav class="hidden lg:flex gap-6 text-lg items-center">
+      <!-- Explorador -->
+      <div class="relative">
+        <button (click)="toggleDropdown('explorar')" class="flex items-center gap-1 hover:underline">
+          Explorar ▼
+        </button>
+        <ul *ngIf="showExplorar" class="absolute z-10 bg-white text-black rounded shadow-md mt-2 w-40">
+          <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Perfiles</li>
+          <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Bandas</li>
+        </ul>
+      </div>
+      <a href="#" class="hover:underline">Convocatorias</a>
+      <a href="#" class="hover:underline">Publicaciones</a>
+      <a href="#" class="hover:underline">Colaboraciones</a>
+      <a href="#" class="hover:underline">Seguimientos</a>
+      <!-- Crear -->
+      <div class="relative">
+        <button (click)="toggleDropdown('crear')" class="flex items-center gap-1 hover:underline">
+          Crear ▼
+        </button>
+        <ul *ngIf="showCrear" class="absolute z-10 bg-white text-black rounded shadow-md mt-2 w-40">
+          <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Colaboracion</li>
+          <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Convocatoria</li>
+          <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Publicacion</li>
+          <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Banda</li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Área derecha -->
+    <div class="hidden lg:flex items-center gap-4">
+      <a href="#" class="hover:underline hidden md:inline">Mi Perfil</a>
+      <button><img src="/Notificaciones.png" /></button>
+      <div class="w-10 h-10 bg-gray-200 rounded-md overflow-hidden">
+        <img src="/FotoPerfil.png" alt="Avatar" class="object-cover w-full h-full" />
+      </div>
+      <a href="#" class="hover:underline hidden md:inline">Salir</a>
+    </div>
+  </div>
+
+  <!-- Menú móvil -->
+  <div *ngIf="menuAbierto" class="lg:hidden mt-4 flex flex-col gap-2 text-lg font-bree">
+    <!-- Explorador móvil -->
+    <div>
+      <button (click)="toggleDropdown('explorar')" class="w-full text-left px-2 py-2 hover:bg-pink-100 rounded flex justify-between items-center">
+        Explorar
+        <span>▼</span>
+      </button>
+      <ul *ngIf="showExplorar" class="ml-4 mt-1 space-y-1">
+        <li class="hover:underline"><a href="#">Perfiles</a></li>
+        <li class="hover:underline"><a href="#">Bandas</a></li>
+      </ul>
+    </div>
+
+    <a href="#" class="px-2 py-2 hover:bg-pink-100 rounded">Convocatorias</a>
+    <a href="#" class="px-2 py-2 hover:bg-pink-100 rounded">Publicaciones</a>
+    <a href="#" class="px-2 py-2 hover:bg-pink-100 rounded">Colaboraciones</a>
+    <a href="#" class="px-2 py-2 hover:bg-pink-100 rounded">Seguimientos</a>
+
+    <!-- Crear móvil -->
+    <div>
+      <button (click)="toggleDropdown('crear')" class="w-full text-left px-2 py-2 hover:bg-pink-100 rounded flex justify-between items-center">
+        Crear
+        <span>▼</span>
+      </button>
+      <ul *ngIf="showCrear" class="ml-4 mt-1 space-y-1">
+        <li class="hover:underline"><a href="#">Colaboración</a></li>
+        <li class="hover:underline"><a href="#">Convocatoria</a></li>
+        <li class="hover:underline"><a href="#">Publicación</a></li>
+        <li class="hover:underline"><a href="#">Banda</a></li>
+      </ul>
+    </div>
+
+    <hr class="my-2" />
+    <a href="#" class="px-2 py-2 hover:bg-pink-100 rounded">Mi Perfil</a>
+    <a href="#" class="px-2 py-2 hover:bg-pink-100 rounded">Salir</a>
+  </div>
+</header>

@@ -1,0 +1,98 @@
+<div class="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8 font-bree">
+  <!-- Formulario principal -->
+  <div class="md:col-span-2 space-y-8">
+    <h1 class="text-4xl font-black">Crear nueva colaboración</h1>
+
+    <form #form="ngForm" (ngSubmit)="publicar(form)" novalidate>
+      <!-- Título -->
+      <div>
+        <label for="nombre">Nombre del proyecto</label>
+        <input
+          type="text"
+          id="nombre"
+          name="nombre"
+          required
+          minlength="3"
+          [(ngModel)]="nombre"
+          #nombreCtrl="ngModel"
+          class="w-full border border-black rounded px-4 py-2"
+        />
+        <p *ngIf="nombreCtrl.invalid && nombreCtrl.touched" class="text-red-600 text-sm">
+          El nombre es obligatorio y debe tener al menos 3 caracteres.
+        </p>
+      </div>
+
+      <!-- Descripción -->
+      <div>
+        <label for="descripcion">Descripción</label>
+        <textarea
+          id="descripcion"
+          name="descripcion"
+          required
+          minlength="10"
+          [(ngModel)]="descripcion"
+          #descripcionCtrl="ngModel"
+          class="w-full border border-black rounded px-4 py-2"
+        ></textarea>
+        <p *ngIf="descripcionCtrl.invalid && descripcionCtrl.touched" class="text-red-600 text-sm">
+          La descripción es obligatoria (mínimo 10 caracteres).
+        </p>
+      </div>
+
+      <!-- Fechas -->
+      <div class="flex gap-4">
+        <div class="flex-1">
+          <label for="inicio">Fecha de inicio</label>
+          <input
+            type="date"
+            id="inicio"
+            name="fechaInicio"
+            required
+            [(ngModel)]="fechaInicio"
+            #inicioCtrl="ngModel"
+            class="w-full border border-black rounded px-4 py-2"
+          />
+        </div>
+
+        <div class="flex-1">
+          <label for="fin">Fecha de fin</label>
+          <input
+            type="date"
+            id="fin"
+            name="fechaFin"
+            required
+            [(ngModel)]="fechaFin"
+            #finCtrl="ngModel"
+            class="w-full border border-black rounded px-4 py-2"
+          />
+        </div>
+      </div>
+
+      <p *ngIf="!fechasValidas" class="text-red-600 text-sm mt-2">
+        La fecha de inicio no puede ser posterior a la fecha de fin.
+      </p>
+
+      <!-- Botón -->
+      <div class="pt-6 text-center">
+        <button
+          type="submit"
+          class="bg-[#FF00FF] text-white text-xl font-bold px-10 py-4 rounded-xl"
+          [disabled]="form.invalid"
+        >
+          Publicar Colaboracion
+        </button>
+      </div>
+    </form>
+
+    <!-- Mensaje de respuesta -->
+    <div *ngIf="mensaje" class="mt-6 text-center text-lg font-semibold text-red-600">
+      {{ mensaje }}
+    </div>
+
+  </div>
+
+  <!-- Imagen decorativa -->
+  <div class="hidden md:flex justify-center items-start">
+    <img src="/Megafono.png" alt="decoración" class="w-64" />
+  </div>
+</div>

@@ -1,0 +1,99 @@
+<header class="home-header w-full px-6 py-4 shadow-md sticky top-0 z-50">
+  <div class="flex justify-between items-center">
+    <!-- Logo + nombre -->
+    <div class="flex items-center gap-2">
+      <img src="/Logo.png" alt="Logo" class="w-10 h-10" />
+      <span class="text-2xl font-poppins font-bold">MusiConnect</span>
+    </div>
+
+    <!-- Botón hamburguesa -->
+    <button class="md:hidden" (click)="toggleMenu()">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <!-- Navegación desktop -->
+    <nav class="hidden md:flex gap-6 text-lg font-bree">
+      <a href="#">Inicio</a>
+      <a href="#">Ecosistema</a>
+      <a href="#">Acerca de nosotros</a>
+    </nav>
+
+    <!-- Botones desktop -->
+    <div class="hidden md:flex gap-4">
+      <a routerLink="/crear-colaboracion">
+        <button class="btn-ingresa">Ingresa</button>
+      </a>
+      <button class="btn-registro">Registrate</button>
+    </div>
+  </div>
+
+  <!-- Menú móvil -->
+  <div *ngIf="menuAbierto" class="md:hidden mt-4 space-y-2 text-center font-bree">
+    <a href="#" class="block">Inicio</a>
+    <a href="#" class="block">Ecosistema</a>
+    <a href="#" class="block">Acerca de nosotros</a>
+    <a routerLink="/crear-colaboracion">
+      <button class="btn-ingresa w-full mt-2">Ingresa</button>
+    </a>
+    <button class="btn-registro w-full">Registrate</button>
+  </div>
+</header>
+
+
+
+<main class="home-main">
+  <section class="intro-section">
+    <div class="intro-text">
+      <h1 class="intro-title">“La música nos une, nosotros la conectamos”</h1>
+      <p class="intro-paragraph">MusiConnect es una plataforma web creada para revolucionar la manera en que los músicos se descubren, colaboran y crecen juntos. Buscamos impulsar el talento artístico construyendo un ecosistema digital inclusivo, donde cada músico, sin importar su nivel, pueda encontrar su lugar, formar conexiones reales y brillar en comunidad.</p>
+    </div>
+    <div class="intro-image">
+      <img src="/ManosUnidas.png" alt="Manos unidas" />
+    </div>
+  </section>
+
+
+  <section class="funcionalidades py-16">
+    <div class="text-center max-w-2xl mx-auto mb-12 px-4">
+      <p class="text-base">Creamos herramientas diseñadas para potenciar cada etapa del camino musical: desde el primer ensayo hasta tu próxima colaboración estelar.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-10 px-6">
+      <div class="func-card bg-[#D9D9D9] rounded text-center px-6 py-10">
+        <img src="/Micro.png" alt="Microfono" class="w-20 mx-auto mb-6" />
+        <h3 class="text-xl font-bold mb-2">Perfiles musicales personalizados</h3>
+        <p class="text-base leading-relaxed">Muestra quién eres como artista: comparte tu estilo, experiencia, influencias y disponibilidad.</p>
+      </div>
+      <div class=" func-card bg-[#D9D9D9] rounded text-center px-6 py-10">
+        <img src="/Banda.png" alt="Banda" class="w-20 mx-auto mb-6" />
+        <h3 class="text-xl font-bold mb-2">Forma tu banda ideal</h3>
+        <p class="text-base leading-relaxed">Conecta con músicos afines según intereses y estilo. Publica convocatorias o responde a oportunidades para crear música juntos.</p>
+      </div>
+      <div class=" func-card bg-[#D9D9D9] rounded text-center px-6 py-10">
+        <img src="/Calendario.png" alt="Calendario" class="w-20 mx-auto mb-6" />
+        <h3 class="text-xl font-bold mb-2">Gestión de eventos y ensayos</h3>
+        <p class="text-base leading-relaxed">Organiza tus actividades musicales en un solo lugar: ensayos, reuniones creativas, conciertos o grabaciones, todo con recordatorios integrados.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="acerca-de">
+    <h2>Acerca de nosotros</h2>
+    <div class="acerca-content">
+      <img src="/Nosotros.png" alt="Equipo" />
+      <div>
+        <h3>¿Por qué creamos MusiConnect?</h3>
+        <p>MusiConnect nace del deseo de transformar la manera en que los músicos se conocen, colaboran y se apoyan.<br><br>Somos un grupo de jóvenes apasionados por la música y la tecnología, comprometidos con crear un espacio inclusivo, creativo y accesible para todos.<br><br>Queremos que ningún talento quede sin ser escuchado.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="home-footer">
+  <p>Inicio | Ecosistema | Acerca de | Contacto</p>
+  <p>Instagram, TikTok, YouTube</p>
+  <p>© 2025 MusiConnect. Todos los derechos reservados.</p>
+</footer>
