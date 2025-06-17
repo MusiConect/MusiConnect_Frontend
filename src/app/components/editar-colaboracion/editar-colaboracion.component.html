@@ -1,0 +1,119 @@
+<!-- editar-colaboracion.component.html (actualizado) -->
+<div class="min-h-screen bg-white p-8 font-bree">
+  <div class="max-w-4xl mx-auto">
+    <!-- Encabezado con título e icono -->
+    <div class="flex justify-between items-start mb-12">
+    <h1 class="text-4xl font-bold text-black">Editar colaboración</h1>
+
+    <!-- Óvalo rosado con megáfono -->
+    <div class="relative">
+        <!-- Megáfono centrado -->
+        <img src="/Megafono.png" alt="Decoración" class="w-40 object-contain" />
+    </div>
+    </div>
+
+    <!-- Notificación de éxito -->
+    <div *ngIf="mostrarMensajeExito" class="bg-pinkfigma rounded-xl p-4 px-6 mb-8 flex items-center">
+      <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center mr-4">
+        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <span class="text-black font-medium">Colaboración actualizada correctamente.</span>
+    </div>
+
+    <!-- Formulario -->
+    <form class="space-y-8">
+      <!-- Nombre del proyecto -->
+      <div>
+        <label for="projectName" class="block text-lg font-medium text-black mb-2">Nombre del proyecto</label>
+        <input
+          id="projectName"
+          name="projectName"
+          [(ngModel)]="projectName"
+          type="text"
+          class="w-full h-14 px-4 border-2 border-black rounded-xl text-lg focus:outline-none focus:border-custom-purple"
+        />
+      </div>
+
+      <!-- Descripción -->
+      <div>
+        <label for="description" class="block text-lg font-medium text-black mb-2">Descripción</label>
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="description"
+          rows="4"
+          class="w-full h-40 px-4 py-3 border-2 border-black rounded-xl text-lg resize-none focus:outline-none focus:border-custom-purple"
+        ></textarea>
+      </div>
+
+      <!-- Fechas -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <label for="startDate" class="block text-lg font-medium text-black mb-2">Fecha de inicio</label>
+          <input
+            id="startDate"
+            name="startDate"
+            [(ngModel)]="startDate"
+            type="date"
+            class="w-full h-14 px-4 border-2 border-black rounded-xl text-lg focus:outline-none focus:border-custom-purple"
+          />
+        </div>
+        <div>
+          <label for="endDate" class="block text-lg font-medium text-black mb-2">Fecha de fin</label>
+          <input
+            id="endDate"
+            name="endDate"
+            [(ngModel)]="endDate"
+            type="date"
+            class="w-full h-14 px-4 border-2 border-black rounded-xl text-lg focus:outline-none focus:border-custom-purple"
+          />
+        </div>
+      </div>
+
+      <!-- Dropdowns -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <label for="status" class="block text-lg font-medium text-black mb-2">Estado</label>
+          <select
+            id="status"
+            name="status"
+            [(ngModel)]="status"
+            class="w-full h-14 px-4 border-2 border-black rounded-xl text-lg appearance-none bg-white focus:outline-none focus:border-custom-purple">
+            <option *ngFor="let option of statusOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+        <div>
+          <label for="collaborator" class="block text-lg font-medium text-black mb-2">Añadir colaborador</label>
+          <div class="relative">
+            <input
+              id="collaborator"
+              name="collaborator"
+              [(ngModel)]="collaborator"
+              (keyup.enter)="addCollaborator()"
+              type="text"
+              placeholder="Ingrese nombre Artístico del colaborador..."
+              class="w-full h-14 px-4 pr-14 border-2 border-black rounded-xl text-lg focus:outline-none focus:border-custom-purple"
+            />
+            <!-- Botón visual para añadir -->
+            <button type="button"
+                    (click)="addCollaborator()"
+                    class="absolute inset-y-0 right-0 flex items-center justify-center w-14 text-black hover:opacity-80">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 11H13V5h-2v6H5v2h6v6h2v-6h6z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="flex flex-col sm:flex-row gap-4 pt-6">
+        <button type="button" (click)="saveChanges()" class="flex-1 bg-[#C800E3] text-white py-4 px-8 rounded-xl font-semibold text-lg hover:opacity-90 transition-opacity">Guardar cambios</button>
+        <button type="button" (click)="cancelChanges()" class="flex-1 bg-white text-black py-4 px-8 rounded-xl font-semibold text-lg border-2 border-black hover:bg-gray-50 transition">Cancelar Cambios</button>
+        <button type="button" (click)="deleteCollaboration()" class="flex-1 bg-white text-black py-4 px-8 rounded-xl font-semibold text-lg border-2 border-black hover:bg-gray-50 transition">Eliminar colaboración</button>
+      </div>
+    </form>
+  </div>
+</div>
