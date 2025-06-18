@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Collaboration } from '../../models/collaboration.model';
+import { CollaborationCreate } from '../../models/collaboration.model';
 import { CollaborationService } from '../../services/collaboration.service';
 import { FormsModule, NgForm } from '@angular/forms';
 
@@ -29,7 +29,7 @@ export class CrearColaboracionComponent {
       return;
     }
 
-    const nuevaColaboracion: Collaboration = {
+    const nuevaColaboracion: CollaborationCreate = {
       titulo: this.nombre,
       descripcion: this.descripcion,
       fechaInicio: this.fechaInicio,
