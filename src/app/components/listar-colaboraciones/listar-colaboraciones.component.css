@@ -1,0 +1,9 @@
+:host {
+    /* Fuente principal del componente */
+    font-family: 'Bree Serif', serif;
+}
+
+/* Asegurar que la tarjeta mantenga una altura mínima para alinear botones */
+.card {
+    min-height: 220px; /* altura reducida sin la imagen */
+} 
