@@ -1,0 +1,32 @@
+---
+description: 
+globs: src/**/*.ts,src/**/*.html,src/**/*.css
+alwaysApply: false
+---
+---
+description: Convenciones para proyectos Angular con Tailwind CSS y Jest.
+globs: ["src/**/*.ts", "src/**/*.html"]
+alwaysApply: false
+---
+
+### Nomenclatura y estructura
+- Archivos en **kebab-case** (`editar-colaboracion.component.ts`).
+- Clases, variables y funciones en **PascalCase**.
+- Sub-carpetas estrictas: components, models, services.
+- Un componente por carpeta.
+
+### Estilo y tooling
+- **Tailwind:** Ordenar clases con `headwind` (layout → box → typo → color → effect).
+- Paleta de colores mediante **CSS custom-props** (`--color-primary`…).
+
+### Accesibilidad & i18n
+- Plantillas **<i18n>** obligatorias en todo texto visible.
+- Atributos `alt`, `aria-label`, `aria-describedby` requeridos.
+
+### Pruebas
+- **Jest** con cobertura 100-%.
+- Tests colocados en `*.spec.ts` junto al código fuente.
+
+### Git & CI
+
+- Commit lint para Conventional-Commits.

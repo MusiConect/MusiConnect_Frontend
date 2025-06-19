@@ -43,4 +43,24 @@ export class CollaborationService {
       `${this.apiUrl}/${id}/user/${userId}`
     );
   }
+
+  /** GET /collaborations */
+  getAll(): Observable<CollaborationUpdate[]> {
+    return this.http.get<CollaborationUpdate[]>(this.apiUrl);
+  }
+
+  /** GET /collaborations/active */
+  getActive(): Observable<CollaborationUpdate[]> {
+    return this.http.get<CollaborationUpdate[]>(`${this.apiUrl}/active`);
+  }
+
+  /** GET /collaborations/usuario/{nombreArtistico} */
+  getByNombreArtistico(nombreArtistico: string): Observable<CollaborationUpdate[]> {
+    return this.http.get<CollaborationUpdate[]>(`${this.apiUrl}/usuario/${nombreArtistico}`);
+  }
+
+  /** GET /collaborations/{id}/colaboradores */
+  listarColaboradores(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${id}/colaboradores`);
+  }
 }
