@@ -1,0 +1,13 @@
+/* Fuentes */
+.font-poppins{font-family:'Poppins',sans-serif;}
+.font-bree{font-family:'Bree Serif',serif;}
+
+.login-bg{background-image:url('/FondoLogin.png');}
+.login-card{width:691px;height:591px;background:#FFFFFF;border:1px solid #000000;}
+.heading{font-size:48px;font-weight:700;}
+.link{color:#69AAFF;font-weight:600;}
+
+.form-control{width:80%;margin-bottom:1rem;}
+.form-control input{width:497px;height:32px;border-radius:15px;}
+
+.login-btn{width:169px;height:60px;background:#BA07C3;border-radius:20px;color:#FFFFFF;font-weight:700;} 
