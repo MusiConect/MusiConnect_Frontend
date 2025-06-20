@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { HostListener } from '@angular/core';
 
 @Component({
@@ -47,6 +47,8 @@ export class HeaderComponent
 
   menuAbierto: boolean = false;
 
+  constructor(private router: Router) {}
+
   toggleMenu() {
     this.menuAbierto = !this.menuAbierto;
   }
@@ -54,5 +56,14 @@ export class HeaderComponent
   closeMenu() {
     this.menuAbierto = false;
     this.closeDropdowns();
+  }
+
+  /**
+   * Cierra la sesión del usuario: elimina el token JWT y redirige a /home.
+   */
+  logout(): void {
+    localStorage.removeItem('token');
+    this.closeMenu();
+    this.router.navigate(['/home']);
   }
 }

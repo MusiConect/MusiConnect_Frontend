@@ -1,0 +1,93 @@
+/* ---------------------------------------------
+   Estilos específicos para el componente Register
+   Se combinan con utilidades de Tailwind CSS.
+   ------------------------------------------- */
+
+/* Fuentes auxiliares */
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+}
+
+.font-bree {
+    font-family: 'Bree Serif', serif;
+}
+
+/* Fondo general de la vista */
+.register-background {
+    background-image: url('/FondoRegister.png');
+}
+
+/* Contenedor principal */
+.register-card {
+    width: 691px; /* Ancho exacto según Figma */
+    height: 804px; /* Alto exacto según Figma */
+    background-color: #FFFFFF;
+    border: 1px solid #000000;
+}
+
+/* Títulos */
+.heading {
+    font-size: 48px; /* Según Figma */
+    font-weight: 700; /* Bold */
+}
+
+.subheading {
+    font-size: 16px;
+    font-weight: 600; /* SemiBold */
+}
+
+.link {
+    color: #69AAFF;
+}
+
+/* Formularios */
+.form-control {
+    width: 80%;
+    margin-bottom: 1rem;
+}
+
+.form-control input {
+    width: 100%;
+    border-radius: 15px;
+}
+
+/* Half width control */
+.half-width {
+    width: 40%;
+    align-self: flex-start;
+}
+
+/* Role selector */
+.role-container {
+    display: flex;
+    width: 80%;
+    border: 1px solid #000000;
+}
+
+.role-option {
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem 0;
+    background-color: #d9d9d9;
+    border-right: 1px solid #000000;
+    font-weight: 700;
+}
+
+.role-option:last-child {
+    border-right: none;
+}
+
+.selected-role {
+    background-color: #8D278D;
+    color: #FFFFFF;
+}
+
+/* Botón registrar */
+.register-button {
+    width: 175px;
+    height: 60px;
+    background-color: #BA07C3;
+    border-radius: 20px;
+    color: #FFFFFF;
+    font-weight: 700;
+} 

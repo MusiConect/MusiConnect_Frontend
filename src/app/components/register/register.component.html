@@ -1,0 +1,78 @@
+<!-- Fondo a pantalla completa que utiliza la imagen FondoRegister.png -->
+<div class="register-background min-h-screen flex items-center justify-center bg-cover bg-center">
+    <!-- Contenedor principal blanco -->
+    <div class="register-card flex flex-col items-center px-8 py-10">
+        <!-- Encabezado principal -->
+        <h1 i18n class="heading font-poppins">Ingresa tus datos</h1>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col items-center w-full">
+            <!-- Campo correo electrónico -->
+            <div class="form-control">
+                <label i18n for="email" class="font-bree">Correo electrónico</label>
+                <input id="email" type="email" formControlName="email" placeholder="correo@ejemplo.com" class="w-full border border-black py-2 px-4 font-bree" />
+            </div>
+
+            <!-- Campo nombre de usuario -->
+            <div class="form-control">
+                <label i18n for="username" class="font-bree">Nombre de usuario</label>
+                <input id="username" type="text" formControlName="username" placeholder="Nombre de usuario" class="w-full border border-black py-2 px-4 font-bree" />
+            </div>
+
+            <!-- Campo contraseña -->
+            <div class="form-control">
+                <label i18n for="password" class="font-bree">Contraseña</label>
+                <input id="password" type="password" formControlName="password" placeholder="••••••••" class="w-full border border-black py-2 px-4 font-bree" />
+            </div>
+
+            <!-- Campo repetir contraseña -->
+            <div class="form-control">
+                <label i18n for="confirmPassword" class="font-bree">Repetir contraseña</label>
+                <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="••••••••" class="w-full border border-black py-2 px-4 font-bree" />
+            </div>
+
+            <!-- Campo país -->
+            <div class="form-control">
+                <label i18n for="country" class="font-bree">País</label>
+                <input id="country" type="text" formControlName="country" placeholder="Ej. Perú" class="w-full border border-black py-2 px-4 font-bree" />
+            </div>
+
+            <!-- Selector de rol -->
+            <fieldset class="form-control role-fieldset">
+                <legend i18n class="font-bree mb-2">Escoger un rol</legend>
+                <div class="role-container">
+                    <!-- Opción MUSICO -->
+                    <div
+                        class="role-option cursor-pointer font-bree"
+                        [ngClass]="{ 'selected-role': isRoleSelected('MUSICO') }"
+                        (click)="selectRole('MUSICO')"
+                        i18n
+                    >
+                        MUSICO
+                    </div>
+
+                    <!-- Opción PRODUCTOR -->
+                    <div
+                        class="role-option cursor-pointer font-bree"
+                        [ngClass]="{ 'selected-role': isRoleSelected('PRODUCTOR') }"
+                        (click)="selectRole('PRODUCTOR')"
+                        i18n
+                    >
+                        PRODUCTOR
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Botón registrar -->
+            <button type="submit" class="register-button mb-2" i18n>Registrar</button>
+
+            <!-- Mensaje de backend -->
+            <p *ngIf="mensaje" [ngClass]="isError ? 'text-red-600' : 'text-green-600'">{{ mensaje }}</p>
+
+            <!-- Subtítulo y enlace de inicio de sesión -->
+            <p i18n class="subheading font-poppins mt-4">
+                ¿Tienes una cuenta?
+                <a routerLink="/login" class="link">Ingresa aquí</a>
+            </p>
+        </form>
+    </div>
+</div> 
