@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { CollaborationCreate } from '../../models/collaboration.model';
 import { CollaborationService } from '../../services/collaboration.service';
+import { SessionService } from '../../services/session.service';
 import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
@@ -16,11 +17,13 @@ export class CrearColaboracionComponent {
   descripcion: string = '';
   fechaInicio: string = '';
   fechaFin: string = '';
-  usuarioId: number = 1;
   fechasValidas: boolean = true; // ✅ Inicializamos la variable para evitar errores
   mensaje: string = ''; // ✅ Esta línea soluciona el error
 
-  constructor(private collaborationService: CollaborationService) {}
+  constructor(
+    private collaborationService: CollaborationService,
+    private session: SessionService
+  ) {}
 
   publicar(form: NgForm) {
     this.fechasValidas = new Date(this.fechaInicio) <= new Date(this.fechaFin);
@@ -34,7 +37,7 @@ export class CrearColaboracionComponent {
       descripcion: this.descripcion,
       fechaInicio: this.fechaInicio,
       fechaFin: this.fechaFin,
-      usuarioId: this.usuarioId
+      usuarioId: this.session.getUserId() ?? 0
     };
 
     this.collaborationService.crearColaboracion(nuevaColaboracion).subscribe({

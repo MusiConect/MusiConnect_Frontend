@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { LoginRequest, AuthResponse } from '../../models/auth.model';
+import { SessionService } from '../../services/session.service';
 
 @Component({
     selector: 'app-login',
@@ -17,7 +18,12 @@ export class LoginComponent {
     mensaje = '';
     isError = false;
 
-    constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
+    constructor(
+        private fb: FormBuilder,
+        private auth: AuthService,
+        private session: SessionService,
+        private router: Router
+    ) {
         this.loginForm = this.fb.group({
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required]
@@ -29,7 +35,7 @@ export class LoginComponent {
         const payload: LoginRequest = this.loginForm.value;
         this.auth.login(payload).subscribe({
             next: (res: AuthResponse) => {
-                localStorage.setItem('token', res.token);
+                this.session.setSession(res);
                 this.isError = false;
                 this.mensaje = res.mensaje;
                 setTimeout(() => this.router.navigate(['/crear-colaboracion']), 1000);
