@@ -12,6 +12,7 @@ export const routes: Routes = [
   { path: 'crear-colaboracion', component: CrearColaboracionComponent, canActivate: [authGuard] },
   { path: 'editar-colaboracion/:id', component: EditarColaboracionComponent, canActivate: [authGuard] },
   { path: 'listar-colaboraciones', component: ListarColaboracionesComponent, canActivate: [authGuard] },
+  { path: 'mostrar-colaboracion/:id', loadComponent: () => import('./components/mostrar-colaboracion/mostrar-colaboracion.component').then(m => m.MostrarColaboracionComponent), canActivate: [authGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent, canActivate: [authGuard] },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
