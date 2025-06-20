@@ -3,12 +3,17 @@ import { CrearColaboracionComponent } from './components/crear-colaboracion/crea
 import { HomeComponent } from './components/home/home.component'; // ✅ Asegúrate de importar Home
 import { EditarColaboracionComponent } from './components/editar-colaboracion/editar-colaboracion.component';
 import { ListarColaboracionesComponent } from './components/listar-colaboraciones/listar-colaboraciones.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'crear-colaboracion', component: CrearColaboracionComponent },
-  { path: 'editar-colaboracion/:id', component: EditarColaboracionComponent }, // ✅ Asegúrate de que este componente maneje la edición
-  { path: 'listar-colaboraciones', component: ListarColaboracionesComponent },
+  { path: 'crear-colaboracion', component: CrearColaboracionComponent, canActivate: [authGuard] },
+  { path: 'editar-colaboracion/:id', component: EditarColaboracionComponent, canActivate: [authGuard] },
+  { path: 'listar-colaboraciones', component: ListarColaboracionesComponent, canActivate: [authGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [authGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [authGuard] },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];
