@@ -4,6 +4,7 @@ import { CollaborationUpdate } from '../../models/collaboration.model';
 import { CollaborationService } from '../../services/collaboration.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SessionService } from '../../services/session.service';
 
 @Component({
   selector: 'app-editar-colaboracion',
@@ -28,22 +29,38 @@ export class EditarColaboracionComponent implements OnInit {
 
   /** IDs */
   private id!: number;
-  private usuarioIdDemo = 1; // de momento
+  private currentUserId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private collabSrv: CollaborationService
+    private collabSrv: CollaborationService,
+    private session: SessionService
   ) {}
 
   /* -------------------- ciclo -------------------- */
   ngOnInit(): void {
     // 1. Sacar el ID de la URL
     this.id = +this.route.snapshot.paramMap.get('id')!;
-    // 2. Cargar estados
+    // 2. Obtener usuario actual
+    this.currentUserId = this.session.getUserId();
+    // 3. Cargar estados
     this.collabSrv.getEstados().subscribe(arr => this.statusOptions = arr);
-    // 3. Traer la colaboración y poblar el formulario
-    this.collabSrv.getById(this.id).subscribe(c => this.fillForm(c));
+    // 4. Traer la colaboración y poblar el formulario; validar autoría
+    this.collabSrv.getById(this.id).subscribe(c => {
+      // Verificación de autoría
+      const currentNombre = this.session.getNombreArtistico();
+      const data: any = c as any; // acceso flexible a campos posibles
+      const esPropietario = (currentNombre && data.nombreUsuario === currentNombre) ||
+                            (this.currentUserId !== null && data.usuarioId === this.currentUserId);
+
+      if (!esPropietario) {
+        alert('No tiene permisos para editar esta colaboración.');
+        this.router.navigate(['/listar-colaboraciones']);
+        return;
+      }
+      this.fillForm(c);
+    });
   }
 
   private fillForm(c: CollaborationUpdate) {
@@ -63,7 +80,7 @@ export class EditarColaboracionComponent implements OnInit {
       fechaInicio:  this.startDate,
       fechaFin:     this.endDate,
       estado:       this.status,
-      usuarioId:    this.usuarioIdDemo   // el backend lo exige
+      usuarioId:    this.currentUserId   // el backend lo exige
     };
 
     this.collabSrv.update(this.id, body).subscribe({
@@ -91,7 +108,12 @@ export class EditarColaboracionComponent implements OnInit {
   deleteCollaboration() {
     if (!confirm('¿Eliminar esta colaboración?')) return;
 
-    this.collabSrv.delete(this.id, this.usuarioIdDemo).subscribe({
+    if (this.currentUserId === null) {
+      alert('Sesión inválida');
+      return;
+    }
+
+    this.collabSrv.delete(this.id, this.currentUserId).subscribe({
       next: () => this.router.navigate(['/crear-colaboracion']),
       error: err => alert(err.error?.message ?? 'Error al eliminar')
     });

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { SessionService } from '../../services/session.service';
 import { Router, RouterModule } from '@angular/router';
 
 /**
@@ -22,7 +23,12 @@ export class RegisterComponent {
     public mensaje: string = '';
     public isError: boolean = false;
 
-    constructor(private readonly fb: FormBuilder, private authService: AuthService, private router: Router) {
+    constructor(
+        private readonly fb: FormBuilder,
+        private authService: AuthService,
+        private session: SessionService,
+        private router: Router
+    ) {
         this.registerForm = this.fb.group({
             email: ['', [Validators.required, Validators.email]],
             username: ['', Validators.required],
@@ -63,7 +69,7 @@ export class RegisterComponent {
             } as const;
             this.authService.register(payload).subscribe({
                 next: (res) => {
-                    localStorage.setItem('token', res.token);
+                    this.session.setSession(res);
                     this.isError = false;
                     this.mensaje = res.mensaje ?? 'Registro exitoso';
                     setTimeout(() => this.router.navigate(['/crear-colaboracion']), 1000);
