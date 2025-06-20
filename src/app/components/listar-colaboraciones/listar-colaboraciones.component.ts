@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CollaborationService } from '../../services/collaboration.service';
 import { CollaborationUpdate } from '../../models/collaboration.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-listar-colaboraciones',
@@ -21,7 +22,7 @@ export class ListarColaboracionesComponent implements OnInit {
     /** Control para listar sólo activas */
     soloActivas: boolean = false;
 
-    constructor(private collaborationSvc: CollaborationService) {}
+    constructor(private collaborationSvc: CollaborationService, private router: Router) {}
 
     ngOnInit(): void {
         this.loadCollaborations();
@@ -57,6 +58,11 @@ export class ListarColaboracionesComponent implements OnInit {
     /** Vuelve a cargar la lista manteniendo criterios actuales */
     recargar(): void {
         this.buscar(); // si hay término busca; si no, load
+    }
+
+    /** Navega a la vista de detalle de la colaboración */
+    verColaboracion(id: number): void {
+        this.router.navigate(['/mostrar-colaboracion', id]);
     }
 
     /** Devuelve las clases Tailwind para el estado */

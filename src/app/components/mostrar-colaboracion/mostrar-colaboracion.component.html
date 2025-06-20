@@ -1,0 +1,49 @@
+<div class="relative p-6 font-bree">
+    <!-- Flecha de retroceso -->
+    <img src="/Retroceder.png"
+         alt="Retroceder"
+         aria-label="Volver a la lista de colaboraciones"
+         (click)="goBack()"
+         class="w-12 h-12 cursor-pointer absolute right-6 top-6" />
+
+    <!-- Encabezado: título + botón editar -->
+    <div class="flex flex-col sm:flex-row sm:items-center gap-4 flex-wrap">
+        <h1 class="text-[64px] leading-none break-words mr-4">{{ collaboration?.titulo }}</h1>
+
+        <button *ngIf="showEdit"
+                type="button"
+                (click)="goEdit()"
+                class="w-[150px] h-[49px] rounded-[15px] bg-[#000784] text-white text-[24px] hover:opacity-90">
+            <i18n>Editar</i18n>
+        </button>
+    </div>
+
+    <!-- Creador y estado -->
+    <div class="flex items-center flex-wrap gap-3 mt-2">
+        <p class="text-[24px]"><i18n>Creado por:</i18n> {{ collaboration?.nombreUsuario }}</p>
+        <span *ngIf="collaboration?.estado"
+              class="px-3 py-1 text-white text-[16px] rounded-md"
+              [ngClass]="estadoClass(collaboration?.estado)">
+            {{ collaboration?.estado | titlecase }}
+        </span>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+        <!-- Descripción -->
+        <div class="lg:col-span-2">
+            <h2 class="text-[32px] mb-4"><i18n>Descripcion:</i18n></h2>
+            <p class="text-[28px] whitespace-pre-line">{{ collaboration?.descripcion }}</p>
+        </div>
+
+        <!-- Colaboradores -->
+        <div>
+            <h2 class="text-[32px] mb-4"><i18n>Colaboradores:</i18n></h2>
+            <ul>
+                <li *ngFor="let name of collaborators" class="text-[28px] mb-2">
+                    {{ name }}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div> 
