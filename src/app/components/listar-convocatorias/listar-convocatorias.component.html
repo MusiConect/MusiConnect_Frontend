@@ -1,0 +1,54 @@
+<div class="max-w-7xl mx-auto px-6 py-12 font-bree">
+    <!-- Título -->
+    <h1 class="text-4xl font-black mb-6">Convocatorias</h1>
+
+    <!-- Barra de acciones -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
+        <!-- Botones de filtro -->
+        <div class="flex flex-wrap gap-6">
+            <button (click)="verSoloFavoritas()" class="border-2 border-black rounded-[6px] px-4 py-2 min-w-[350px] bg-white hover:bg-gray-100 text-center">
+                Listar solo convocatorias favoritas
+            </button>
+            <button (click)="verSoloActivas()" class="border-2 border-black rounded-[6px] px-4 py-2 min-w-[350px] bg-white hover:bg-gray-100 text-center">
+                Listar solo convocatorias activas
+            </button>
+        </div>
+
+        <!-- Acción actualizar -->
+        <button (click)="recargar()" class="flex items-center gap-2 self-start md:self-auto">
+            <img src="/Reload.png" alt="Actualizar" class="w-6 h-6" />
+            <span class="underline">Actualizar</span>
+        </button>
+    </div>
+
+    <!-- Grid de tarjetas -->
+    <div *ngIf="!cargando && convocatorias.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div *ngFor="let c of convocatorias" class="w-[254px] h-[281px] bg-[#D9D9D9] p-4 relative">
+            <!-- Foto perfil -->
+            <img src="/FotoPerfil.png" alt="Perfil" class="w-20 h-20 object-cover" />
+            <!-- Icono favorita -->
+            <img
+                *ngIf="!c.esPropia && !c.expirada && c.activa"
+                [src]="c.esFavorita ? '/Favorita.png' : '/NoFavorita.png'"
+                [alt]="c.esFavorita ? 'Favorita' : 'No favorita'"
+                class="w-8 h-8 absolute top-4 right-4 cursor-pointer"
+                (click)="toggleFavorito(c)"
+            />
+
+            <!-- Información -->
+            <div class="absolute bottom-4 left-4 right-4">
+                <h2 class="font-poppins font-bold text-lg break-words">{{ c.titulo }}</h2>
+                <p class="font-poppins font-bold text-sm flex items-center">{{ c.fechaLimite | date:'dd/MM/yyyy' }}
+                    <span *ngIf="c.expirada" class="ml-1 px-1 bg-[#c80000] text-white font-bree">Expirada</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Imagen sin resultados -->
+    <div *ngIf="!cargando && convocatorias.length === 0" class="flex justify-center mt-16">
+        <img src="/NoMoreConvos.png" alt="No hay más convocatorias" class="w-64" />
+    </div>
+
+    <div *ngIf="cargando" class="text-center text-lg mt-10">Cargando...</div>
+</div> 
