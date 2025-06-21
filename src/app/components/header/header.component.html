@@ -26,7 +26,7 @@
           <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Bandas</li>
         </ul>
       </div>
-      <a href="#" class="hover:underline">Convocatorias</a>
+      <a routerLink="/listar-convocatorias" class="hover:underline">Convocatorias</a>
       <a href="#" class="hover:underline">Publicaciones</a>
       <a routerLink="/listar-colaboraciones" (click)="closeMenu()" class="hover:underline">Colaboraciones</a>
       <a href="#" class="hover:underline">Seguimientos</a>
@@ -39,7 +39,9 @@
           <li>
             <a routerLink="/crear-colaboracion" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-200">Colaboracion</a>
           </li>
-          <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Convocatoria</li>
+          <li>
+            <a routerLink="/crear-convocatoria" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-200">Convocatoria</a>
+          </li>
           <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Publicacion</li>
           <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Banda</li>
         </ul>
@@ -71,10 +73,10 @@
       </ul>
     </div>
 
-    <a href="#" class="px-2 py-2 hover:bg-pink-100 rounded">Convocatorias</a>
-    <a href="#" class="px-2 py-2 hover:bg-pink-100 rounded">Publicaciones</a>
-    <a routerLink="/listar-colaboraciones" (click)="closeMenu()" class="px-2 py-2 hover:bg-pink-100 rounded">Colaboraciones</a>
-    <a href="#" class="px-2 py-2 hover:bg-pink-100 rounded">Seguimientos</a>
+    <a routerLink="/home" (click)="closeMenu()" class="block py-2">Inicio</a>
+    <a routerLink="/listar-colaboraciones" (click)="closeMenu()" class="block py-2">Colaboraciones</a>
+    <a routerLink="/listar-convocatorias" (click)="closeMenu()" class="block py-2">Convocatorias</a>
+    <a href="#" (click)="closeMenu()" class="block py-2">Artistas</a>
 
     <!-- Crear móvil -->
     <div>
@@ -83,10 +85,10 @@
         <span>▼</span>
       </button>
       <ul *ngIf="showCrear" class="ml-4 mt-1 space-y-1">
-        <li class="hover:underline"><a routerLink="/crear-colaboracion" (click)="closeMenu()">Colaboración</a></li>
-        <li class="hover:underline"><a href="#">Convocatoria</a></li>
-        <li class="hover:underline"><a href="#">Publicación</a></li>
-        <li class="hover:underline"><a href="#">Banda</a></li>
+        <li><a routerLink="/crear-colaboracion" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Colaboración</a></li>
+        <li><a routerLink="/crear-convocatoria" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Convocatoria</a></li>
+        <li><a href="#" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Publicación</a></li>
+        <li><a href="#" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Banda</a></li>
       </ul>
     </div>
 
