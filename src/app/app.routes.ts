@@ -18,6 +18,7 @@ export const routes: Routes = [
   { path: 'crear-convocatoria', loadComponent: () => import('./components/crear-convocatoria/crear-convocatoria.component').then(m => m.CrearConvocatoriaComponent), canActivate: [authGuard] },
   { path: 'editar-convocatoria/:id', loadComponent: () => import('./components/editar-convocatoria/editar-convocatoria.component').then(m => m.EditarConvocatoriaComponent), canActivate: [authGuard] },
   { path: 'listar-convocatorias', loadComponent: () => import('./components/listar-convocatorias/listar-convocatorias.component').then(m => m.ListarConvocatoriasComponent), canActivate: [authGuard] },
+  { path: 'mostrar-convocatoria/:id', loadComponent: () => import('./components/mostrar-convocatoria/mostrar-convocatoria.component').then(m => m.MostrarConvocatoriaComponent) },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];
