@@ -36,6 +36,11 @@ export class ConvocationService {
         return this.http.get<ConvocationResponse[]>(this.apiUrl);
     }
 
+    /** GET /convocations/all */
+    listarTodas(): Observable<ConvocationResponse[]> {
+        return this.http.get<ConvocationResponse[]>(`${this.apiUrl}/all`);
+    }
+
     /** GET /convocations/users/{userId}/favorites */
     listarFavoritasPorUsuario(userId: number): Observable<ConvocationResponse[]> {
         return this.http.get<ConvocationResponse[]>(`${this.apiUrl}/users/${userId}/favorites`);
