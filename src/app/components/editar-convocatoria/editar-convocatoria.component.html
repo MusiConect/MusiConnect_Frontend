@@ -1,0 +1,106 @@
+<div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8 font-bree">
+    <!-- Sección de formulario -->
+    <div class="md:col-span-2 space-y-10">
+        <!-- Título -->
+        <h1 class="text-4xl font-black">Editar Convocatoria</h1>
+
+        <!-- Mensaje éxito -->
+        <div *ngIf="mensaje" class="bg-pinkfigma rounded-xl p-4 px-6 mb-8 flex items-center w-full md:w-[500px]">
+            <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center mr-4">
+                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <span class="text-black font-medium">{{ mensaje }}</span>
+        </div>
+
+        <!-- Mensaje de error de propiedad -->
+        <div *ngIf="sinPropiedad" class="bg-red-200 rounded-xl p-4 px-6 mb-8 flex items-center w-full md:w-[500px]">
+            <span class="text-red-800 font-medium">{{ mensajeError }}</span>
+        </div>
+
+        <!-- Formulario -->
+        <form #form="ngForm" (ngSubmit)="guardar(form)" novalidate class="space-y-8">
+            <!-- Título convocatoria -->
+            <div>
+                <label for="titulo" class="block mb-2 text-2xl">Titulo de la convocatoria</label>
+                <input
+                    type="text"
+                    id="titulo"
+                    name="titulo"
+                    minlength="3"
+                    required
+                    [(ngModel)]="titulo"
+                    #tituloCtrl="ngModel"
+                    class="w-full max-w-none md:max-w-[1424px] border border-black rounded px-4 py-3 text-xl"
+                />
+                <p *ngIf="tituloCtrl.invalid && tituloCtrl.touched" class="text-red-600 text-sm mt-1">
+                    El título es obligatorio y debe tener al menos 3 caracteres.
+                </p>
+            </div>
+
+            <!-- Descripción -->
+            <div>
+                <label for="descripcion" class="block mb-2 text-2xl">Descripción</label>
+                <textarea
+                    id="descripcion"
+                    name="descripcion"
+                    minlength="10"
+                    required
+                    [(ngModel)]="descripcion"
+                    #descCtrl="ngModel"
+                    class="w-full max-w-none md:max-w-[1424px] border border-black rounded px-4 py-3 text-xl h-40 resize-none"
+                ></textarea>
+                <p *ngIf="descCtrl.invalid && descCtrl.touched" class="text-red-600 text-sm mt-1">
+                    La descripción es obligatoria y debe tener al menos 10 caracteres.
+                </p>
+            </div>
+
+            <!-- Fecha límite -->
+            <div>
+                <label for="fechaLimite" class="block mb-2 text-2xl">Fecha Limite</label>
+                <input
+                    type="date"
+                    id="fechaLimite"
+                    name="fechaLimite"
+                    required
+                    [(ngModel)]="fechaLimite"
+                    #fechaCtrl="ngModel"
+                    class="w-64 border border-black rounded px-4 py-3 text-xl"
+                />
+            </div>
+
+            <!-- Botones -->
+            <div class="flex flex-col md:flex-row gap-6 pt-4">
+                <button
+                    type="submit"
+                    class="flex-1 h-[60px] bg-[#B225FE] hover:opacity-90 text-white text-xl font-bold rounded-[10px] transition-opacity"
+                    [disabled]="form.invalid"
+                >
+                    Guardar cambios
+                </button>
+
+                <button
+                    type="button"
+                    class="flex-1 h-[60px] bg-white border-2 border-black text-xl rounded-[10px] hover:bg-gray-100"
+                    (click)="cancelar()"
+                >
+                    Cancelar Cambios
+                </button>
+
+                <button
+                    type="button"
+                    class="flex-1 h-[60px] bg-white border-2 border-black text-xl rounded-[10px] hover:bg-red-100"
+                    (click)="eliminar()"
+                >
+                    Eliminar convocatoria
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Imagen decorativa -->
+    <div class="hidden md:flex justify-center items-start">
+        <img src="/Megafono.png" alt="Megáfono" class="w-64" />
+    </div>
+</div> 
