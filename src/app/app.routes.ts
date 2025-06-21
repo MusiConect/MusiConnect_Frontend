@@ -16,6 +16,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent, canActivate: [authGuard] },
   { path: 'crear-convocatoria', loadComponent: () => import('./components/crear-convocatoria/crear-convocatoria.component').then(m => m.CrearConvocatoriaComponent), canActivate: [authGuard] },
+  { path: 'editar-convocatoria/:id', loadComponent: () => import('./components/editar-convocatoria/editar-convocatoria.component').then(m => m.EditarConvocatoriaComponent), canActivate: [authGuard] },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];
