@@ -1,0 +1,80 @@
+<div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8 font-bree">
+    <!-- Formulario -->
+    <div class="md:col-span-2 space-y-10">
+        <!-- Título principal -->
+        <h1 class="text-4xl leading-tight font-black">Crear nueva convocatoria</h1>
+
+        <!-- Formulario -->
+        <form #form="ngForm" (ngSubmit)="publicar(form)" novalidate class="space-y-8">
+            <!-- Campo título -->
+            <div>
+                <label for="titulo" class="block mb-2 text-2xl">Titulo para la convocatoria</label>
+                <input
+                    type="text"
+                    id="titulo"
+                    name="titulo"
+                    minlength="3"
+                    required
+                    [(ngModel)]="titulo"
+                    #tituloCtrl="ngModel"
+                    class="w-full max-w-none md:max-w-[1424px] border border-black rounded px-4 py-3 text-xl"
+                />
+                <p *ngIf="tituloCtrl.invalid && tituloCtrl.touched" class="text-red-600 text-sm mt-1">
+                    El título es obligatorio y debe tener al menos 3 caracteres.
+                </p>
+            </div>
+
+            <!-- Campo descripción -->
+            <div>
+                <label for="descripcion" class="block mb-2 text-2xl">Descripción</label>
+                <textarea
+                    id="descripcion"
+                    name="descripcion"
+                    minlength="10"
+                    required
+                    [(ngModel)]="descripcion"
+                    #descCtrl="ngModel"
+                    class="w-full max-w-none md:max-w-[1424px] border border-black rounded px-4 py-3 text-xl h-40 resize-none"
+                ></textarea>
+                <p *ngIf="descCtrl.invalid && descCtrl.touched" class="text-red-600 text-sm mt-1">
+                    La descripción es obligatoria y debe tener al menos 10 caracteres.
+                </p>
+            </div>
+
+            <!-- Campo fecha límite -->
+            <div>
+                <label for="fechaLimite" class="block mb-2 text-2xl">Fecha limite de la convocatoria</label>
+                <input
+                    type="date"
+                    id="fechaLimite"
+                    name="fechaLimite"
+                    required
+                    [(ngModel)]="fechaLimite"
+                    #fechaCtrl="ngModel"
+                    class="w-64 border border-black rounded px-4 py-3 text-xl"
+                />
+            </div>
+
+            <!-- Botón de acción -->
+            <div class="pt-4 text-center">
+                <button
+                    type="submit"
+                    class="w-full md:w-[1172px] h-[88px] bg-[#ff04fc] hover:opacity-90 text-white text-3xl font-bold rounded-[15px] transition-opacity"
+                    [disabled]="form.invalid"
+                >
+                    Publicar Convocatoria
+                </button>
+            </div>
+        </form>
+
+        <!-- Mensaje informativo -->
+        <div *ngIf="mensaje" class="text-center text-lg font-semibold mt-6" [ngClass]="mensaje.startsWith('✅') ? 'text-green-700' : 'text-red-600'">
+            {{ mensaje }}
+        </div>
+    </div>
+
+    <!-- Imagen decorativa -->
+    <div class="hidden md:flex justify-center items-start">
+        <img src="/Megafono.png" alt="Megáfono convocatoria" class="w-64" />
+    </div>
+</div> 
