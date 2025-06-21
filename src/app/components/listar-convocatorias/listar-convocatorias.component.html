@@ -37,7 +37,7 @@
 
             <!-- Información -->
             <div class="absolute bottom-4 left-4 right-4">
-                <h2 class="font-poppins font-bold text-lg break-words">{{ c.titulo }}</h2>
+                <h2 class="font-poppins font-bold text-lg break-words cursor-pointer hover:underline" (click)="verDetalle(c)">{{ c.titulo }}</h2>
                 <p class="font-poppins font-bold text-sm flex items-center">{{ c.fechaLimite | date:'dd/MM/yyyy' }}
                     <span *ngIf="c.expirada" class="ml-1 px-1 bg-[#c80000] text-white font-bree">Expirada</span>
                 </p>

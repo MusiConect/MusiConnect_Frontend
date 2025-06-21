@@ -1,0 +1,32 @@
+<ng-container *ngIf="convocatoria as conv">
+    <div class="px-4 py-8 flex justify-center font-bree">
+        <div class="w-[1121px] h-[759px] bg-[#D9D9D9] relative p-8 flex flex-col">
+            <!-- Botón editar -->
+            <button *ngIf="esPropia" (click)="editar()" class="absolute top-6 left-6 bg-[#000784] text-white px-6 py-2 rounded-[15px]">Editar</button>
+
+            <!-- Flecha volver -->
+            <img src="/Retroceder.png" alt="Volver" class="absolute top-6 right-6 w-8 h-8 cursor-pointer" (click)="volver()" />
+
+            <!-- Contenido -->
+            <div class="flex gap-10 mt-10">
+                <!-- Imagen perfil -->
+                <img src="/FotoPerfil.png" alt="Perfil" class="w-64 h-64 object-cover" />
+
+                <!-- Datos principales -->
+                <div class="flex-1 space-y-4">
+                    <h2 class="text-3xl font-black">{{ conv.titulo }}</h2>
+                    <p class="text-xl">Fecha límite: {{ conv.fechaLimite | date:'dd/MM/yyyy' }}</p>
+                    <p class="text-xl">Creador: {{ conv.creadorNombreArtistico }}</p>
+                </div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="mt-10">
+                <h3 class="text-2xl font-black mb-4">DESCRIPCIÓN:</h3>
+                <div class="bg-[#F1F1F1] p-6 rounded-xl whitespace-pre-line overflow-y-auto">
+                    {{ conv.descripcion }}
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container> 

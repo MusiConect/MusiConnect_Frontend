@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConvocationResponse } from '../../models/convocation.model';
 import { ConvocationService } from '../../services/convocation.service';
 import { SessionService } from '../../services/session.service';
+import { Router } from '@angular/router';
 
 interface CardConvocation extends ConvocationResponse {
     esFavorita: boolean;
@@ -30,7 +31,8 @@ export class ListarConvocatoriasComponent implements OnInit {
 
     constructor(
         private convocationService: ConvocationService,
-        private session: SessionService
+        private session: SessionService,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -150,5 +152,11 @@ export class ListarConvocatoriasComponent implements OnInit {
                 }
             });
         }
+    }
+
+    /** Navegar a detalle */
+    verDetalle(conv: CardConvocation): void {
+        if (conv.expirada) return;
+        this.router.navigate(['/mostrar-convocatoria', conv.convocationId]);
     }
 } 
