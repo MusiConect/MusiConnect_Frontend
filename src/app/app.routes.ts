@@ -15,6 +15,7 @@ export const routes: Routes = [
   { path: 'mostrar-colaboracion/:id', loadComponent: () => import('./components/mostrar-colaboracion/mostrar-colaboracion.component').then(m => m.MostrarColaboracionComponent), canActivate: [authGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent, canActivate: [authGuard] },
+  { path: 'crear-convocatoria', loadComponent: () => import('./components/crear-convocatoria/crear-convocatoria.component').then(m => m.CrearConvocatoriaComponent), canActivate: [authGuard] },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];

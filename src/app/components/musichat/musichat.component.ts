@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MusichatService } from '../../services/musichat.service';
 import { ChatMessage } from '../../models/musichat.model';
-import { SessionService } from '../../services/session.service';
 
 @Component({
     selector: 'app-musichat',
@@ -28,39 +27,10 @@ export class MusichatComponent implements OnInit {
     /** Indica si el bot está generando una respuesta */
     isLoading = false;
 
-    constructor(private chatService: MusichatService, private session: SessionService) {}
+    constructor(private chatService: MusichatService) {}
 
     ngOnInit(): void {
-        this.sendIntroPromptIfNeeded();
-    }
-
-    /**
-     * Envía un mensaje inicial oculto al backend para establecer contexto.
-     * Solo se envía una vez por usuario (persistido en localStorage).
-     */
-    private sendIntroPromptIfNeeded(): void {
-        const userId = this.session.getUserId();
-        if (!userId) {
-            return; // No enviar a usuarios anónimos
-        }
-
-        const storageKey = `musichat_intro_sent_${userId}`;
-        if (localStorage.getItem(storageKey)) {
-            return; // ya se envió antes
-        }
-
-        const prompt =
-            ' ';
-
-        // Enviamos el prompt pero ignoramos la respuesta.
-        this.chatService.sendMessage(prompt).subscribe({
-            next: () => {
-                localStorage.setItem(storageKey, '1');
-            },
-            error: () => {
-                // Si falla, no guardamos la marca para reintentar en la siguiente visita
-            }
-        });
+        // Inicialización vacía; se eliminó la lógica de prompt inicial oculto
     }
 
     toggleChat(): void {
