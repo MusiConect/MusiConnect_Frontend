@@ -1,0 +1,15 @@
+/* Estilos adicionales para MusiChat */
+
+/* Aseguramos que la barra de scroll no afecte el diseño visual */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #c4c4c4;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+} 
