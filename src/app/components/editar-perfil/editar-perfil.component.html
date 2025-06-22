@@ -1,0 +1,64 @@
+<!-- Título -->
+<div class="max-w-6xl mx-auto px-8">
+    <h1 class="text-4xl font-bree mb-8" i18n>Editar perfil</h1>
+
+<!-- Contenedor principal -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+    <!-- Columna izquierda -->
+    <div>
+        <!-- Foto -->
+        <label class="font-bree block mb-2" i18n>Foto de perfil:</label>
+        <img src="/FotoPerfil.png" alt="Foto de perfil" class="w-64 h-64 object-cover border-2 border-black rounded-[15px] mb-6" />
+
+        <!-- Nombre artístico (solo lectura) -->
+        <label class="font-bree block mb-1" i18n>Nombre artístico:</label>
+        <input type="text" [(ngModel)]="nombreArtistico" disabled
+               class="w-full max-w-xl border-2 border-black rounded-[15px] px-4 py-2 mb-4 bg-gray-200" />
+
+        <!-- Correo electrónico -->
+        <label class="font-bree block mb-1" i18n>Correo electrónico:</label>
+        <input type="email" [(ngModel)]="email"
+               class="w-full max-w-xl border-2 border-black rounded-[15px] px-4 py-2 mb-4" />
+
+        <!-- Ubicación -->
+        <label class="font-bree block mb-1" i18n>Ubicación (País):</label>
+        <input type="text" [(ngModel)]="ubicacion"
+               class="w-full max-w-xl border-2 border-black rounded-[15px] px-4 py-2 mb-4" />
+
+        <!-- Disponibilidad -->
+        <p class="font-bree mb-2" i18n>ESTADO: {{ disponibilidad ? 'DISPONIBLE' : 'NO DISPONIBLE' }}</p>
+        <label class="inline-flex items-center">
+            <input type="checkbox" [(ngModel)]="disponibilidad" class="mr-2" />
+            <span class="font-bree" i18n>Disponible</span>
+        </label>
+    </div>
+
+    <!-- Columna derecha -->
+    <div>
+        <!-- Bio -->
+        <label class="font-bree block mb-1" i18n>Tu biografía:</label>
+        <textarea rows="3" [(ngModel)]="bio"
+                  class="w-full max-w-xl border-2 border-black rounded-[15px] p-2 mb-4"
+                  placeholder="Empty label..."></textarea>
+
+        <!-- Instrumentos -->
+        <label class="font-bree block mb-1" i18n>Instrumentos que utilizas:</label>
+        <input type="text" [(ngModel)]="instrumentos"
+               class="w-full max-w-xl border-2 border-black rounded-[15px] px-4 py-2 mb-4"
+               placeholder="Separe los instrumentos con comas..." />
+
+        <!-- Géneros -->
+        <label class="font-bree block mb-1" i18n>Géneros que te gustan:</label>
+        <div class="border-2 border-black rounded-[15px] h-48 overflow-y-auto p-2 max-w-xl">
+            <div *ngFor="let g of generosValidos" class="flex items-center mb-1">
+                <input type="checkbox" [checked]="generosSeleccionados.has(g)" (change)="toggleGenero(g)" class="mr-2" />
+                <span class="font-bree">{{ g.replace('_', ' ') }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Botón principal -->
+<button (click)="guardarCambios()" class="mt-10 mx-auto block bg-[#FF48FF] text-white font-bree px-10 py-3 rounded-[15px]" i18n>Guardar cambios</button>
+
+</div> 
