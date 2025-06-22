@@ -1,0 +1,24 @@
+<div class="container mx-auto px-4 py-6">
+    <h1 class="text-4xl mb-6" i18n="@@titlePerfiles">Perfiles:</h1>
+
+    <div *ngFor="let user of users" class="bg-gray-100 rounded-lg p-6 mb-8 flex flex-col sm:flex-row gap-4 shadow">
+        <!-- Izquierda: Avatar + nombre -->
+        <div class="flex flex-col items-center w-full sm:w-40">
+            <img src="/FotoPerfil.png" alt="Avatar de usuario" class="w-24 h-24 object-cover rounded" />
+            <button
+                class="mt-4 text-lg underline hover:text-blue-700 focus:outline-none"
+                (click)="verPerfil(user.userId)"
+                [attr.aria-label]="'Ver perfil de ' + user.nombreArtistico">
+                {{ user.nombreArtistico }}
+            </button>
+        </div>
+
+        <!-- Derecha: Biografía -->
+        <div class="flex-1">
+            <h2 class="text-xl mb-2" i18n="@@labelBio">Biografía:</h2>
+            <p class="leading-relaxed whitespace-pre-line">
+                {{ user.bio || '—' }}
+            </p>
+        </div>
+    </div>
+</div> 
