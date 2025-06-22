@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { SessionService } from '../../services/session.service';
 import { User } from '../../models/user.model';
+import { FollowService } from '../../services/follow.service';
+import { FollowCreate, UnfollowRequest } from '../../models/follow.model';
 
 @Component({
     selector: 'app-ver-perfil',
@@ -26,7 +28,8 @@ export class VerPerfilComponent implements OnInit {
         private readonly route: ActivatedRoute,
         private readonly userService: UserService,
         private readonly session: SessionService,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly followSvc: FollowService
     ) {}
 
     ngOnInit(): void {
@@ -54,7 +57,41 @@ export class VerPerfilComponent implements OnInit {
 
     /** Acción para seguir / dejar de seguir un usuario */
     seguirUsuario(): void {
-        console.log('Seguir usuario (en construcción)');
+        const followerId = this.session.getUserId();
+        const seguido = this.usuario();
+        if (!followerId || !seguido) {
+            return; // no hay sesión o usuario todavía
+        }
+
+        const followPayload: FollowCreate = {
+            followerId,
+            followedUserId: seguido.userId
+        };
+
+        this.followSvc.crearFollow(followPayload).subscribe({
+            next: (res) => {
+                window.alert(res.message);
+            },
+            error: (err) => {
+                const mensaje = err?.error?.error as string | undefined;
+                if (mensaje && mensaje.includes('Ya sigues')) {
+                    // Ya existe follow, entonces quitamos seguimiento
+                    const unfollowPayload: UnfollowRequest = {
+                        followerId,
+                        followedUserId: seguido.userId
+                    };
+                    this.followSvc.eliminarFollow(unfollowPayload).subscribe({
+                        next: (res) => window.alert(res.message),
+                        error: (e2) => {
+                            const msg2 = e2?.error?.error ?? 'Error al dejar de seguir.';
+                            window.alert(msg2);
+                        }
+                    });
+                } else {
+                    window.alert(mensaje ?? 'Error al seguir usuario.');
+                }
+            }
+        });
     }
 
     /** Devuelve la lista de instrumentos en base al campo de texto */
