@@ -22,7 +22,9 @@
           Explorar ▼
         </button>
         <ul *ngIf="showExplorar" class="absolute z-10 bg-white text-black rounded shadow-md mt-2 w-40">
-          <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Perfiles</li>
+          <li>
+            <a routerLink="/listar-perfiles" (click)="closeDropdowns()" class="block px-4 py-2 hover:bg-gray-200">Perfiles</a>
+          </li>
           <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Bandas</li>
         </ul>
       </div>
@@ -68,7 +70,7 @@
         <span>▼</span>
       </button>
       <ul *ngIf="showExplorar" class="ml-4 mt-1 space-y-1">
-        <li class="hover:underline"><a href="#">Perfiles</a></li>
+        <li class="hover:underline"><a routerLink="/listar-perfiles" (click)="closeMenu()">Perfiles</a></li>
         <li class="hover:underline"><a href="#">Bandas</a></li>
       </ul>
     </div>

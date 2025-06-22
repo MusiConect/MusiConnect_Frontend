@@ -21,6 +21,7 @@ export const routes: Routes = [
   { path: 'mostrar-convocatoria/:id', loadComponent: () => import('./components/mostrar-convocatoria/mostrar-convocatoria.component').then(m => m.MostrarConvocatoriaComponent) },
   { path: 'ver-perfil/:id', loadComponent: () => import('./components/ver-perfil/ver-perfil.component').then(m => m.VerPerfilComponent), canActivate: [authGuard] },
   { path: 'editar-perfil', loadComponent: () => import('./components/editar-perfil/editar-perfil.component').then(m => m.EditarPerfilComponent), canActivate: [authGuard] },
+  { path: 'listar-perfiles', loadComponent: () => import('./components/listar-perfiles/listar-perfiles.component').then(m => m.ListarPerfilesComponent), canActivate: [authGuard] },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];
