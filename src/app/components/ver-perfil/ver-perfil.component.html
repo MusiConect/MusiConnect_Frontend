@@ -15,11 +15,32 @@
                 <img src="/Edit.png" alt="Editar" class="w-8 h-8 hover:scale-110 transition-transform" />
             </button>
         </div>
+
         <ng-template #iconoSeguir>
             <div class="flex gap-6 mt-4">
-                <button (click)="seguirUsuario()" aria-label="Seguir usuario">
-                    <img src="/Follow.png" alt="Seguir" class="w-10 h-10 hover:scale-110 transition-transform" />
-                </button>
+                <ng-container *ngIf="!siguiendo(); else yaSiguiendo">
+                    <button 
+                        (click)="seguirUsuario()" 
+                        aria-label="Seguir usuario"
+                        class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                    >
+                        Seguir
+                    </button>
+                </ng-container>
+                <ng-template #yaSiguiendo>
+                    <button 
+                        (click)="dejarDeSeguirUsuario()" 
+                        aria-label="Dejar de seguir" 
+                        class="relative group"
+                    >
+                        <img src="/Follow.png" alt="Siguiendo" class="w-10 h-10 opacity-80" />
+                        <span
+                            class="absolute left-1/2 -translate-x-1/2 top-full mt-2 px-2 py-1 rounded bg-black text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 whitespace-nowrap"
+                        >
+                            Dejar de seguir
+                        </span>
+                    </button>
+                </ng-template>
             </div>
         </ng-template>
 

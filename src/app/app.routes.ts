@@ -5,6 +5,7 @@ import { EditarColaboracionComponent } from './components/editar-colaboracion/ed
 import { ListarColaboracionesComponent } from './components/listar-colaboraciones/listar-colaboraciones.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { ListaSeguidosComponent } from './components/lista-seguidos/lista-seguidos.component';
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -20,6 +21,7 @@ export const routes: Routes = [
   { path: 'listar-convocatorias', loadComponent: () => import('./components/listar-convocatorias/listar-convocatorias.component').then(m => m.ListarConvocatoriasComponent), canActivate: [authGuard] },
   { path: 'mostrar-convocatoria/:id', loadComponent: () => import('./components/mostrar-convocatoria/mostrar-convocatoria.component').then(m => m.MostrarConvocatoriaComponent) },
   { path: 'ver-perfil/:id', loadComponent: () => import('./components/ver-perfil/ver-perfil.component').then(m => m.VerPerfilComponent), canActivate: [authGuard] },
+  { path: 'seguidos', component: ListaSeguidosComponent, canActivate: [authGuard] },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];

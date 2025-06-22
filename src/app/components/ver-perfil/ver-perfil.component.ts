@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { SessionService } from '../../services/session.service';
 import { User } from '../../models/user.model';
+import { FollowService } from '../../services/follow.service';
 
 @Component({
     selector: 'app-ver-perfil',
@@ -16,6 +17,9 @@ export class VerPerfilComponent implements OnInit {
     /** Datos del perfil cargado */
     usuario = signal<User | null>(null);
 
+    /** Estado de seguimiento */
+    siguiendo = signal<boolean>(false);
+
     /** ¿El visitante está viendo su propio perfil? */
     readonly esPropio = computed(() => {
         const idActual = this.session.getUserId();
@@ -26,7 +30,8 @@ export class VerPerfilComponent implements OnInit {
         private readonly route: ActivatedRoute,
         private readonly userService: UserService,
         private readonly session: SessionService,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly followService: FollowService
     ) {}
 
     ngOnInit(): void {
@@ -39,8 +44,24 @@ export class VerPerfilComponent implements OnInit {
         }
 
         this.userService.getById(id).subscribe({
-            next: (u) => this.usuario.set(u),
+            next: (u) => {
+                this.usuario.set(u);
+                this.verificarSiSigue();
+            },
             error: () => this.router.navigate(['/home'])
+        });
+    }
+
+    /** Verifica si el usuario actual ya sigue este perfil */
+    private verificarSiSigue(): void {
+        const miId = this.session.getUserId();
+        const perfilId = this.usuario()?.userId;
+        if (!miId || !perfilId || miId === perfilId) {
+            this.siguiendo.set(false);
+            return;
+        }
+        this.followService.getFollowing(miId).subscribe(follows => {
+            this.siguiendo.set(follows.some(f => f.userId === perfilId));
         });
     }
 
@@ -52,7 +73,22 @@ export class VerPerfilComponent implements OnInit {
 
     /** Acción para seguir / dejar de seguir un usuario */
     seguirUsuario(): void {
-        console.log('Seguir usuario (en construcción)');
+        const miId = this.session.getUserId();
+        const perfilId = this.usuario()?.userId;
+        if (!miId || !perfilId) return;
+        this.followService.followUser(miId, perfilId).subscribe({
+            next: () => this.siguiendo.set(true)
+        });
+    }
+
+    /** Acción para dejar de seguir un usuario */
+    dejarDeSeguirUsuario(): void {
+        const miId = this.session.getUserId();
+        const perfilId = this.usuario()?.userId;
+        if (!miId || !perfilId) return;
+        this.followService.unfollowUser(miId, perfilId).subscribe({
+            next: () => this.siguiendo.set(false)
+        });
     }
 
     /** Devuelve la lista de instrumentos en base al campo de texto */
