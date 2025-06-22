@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { HostListener } from '@angular/core';
+import { SessionService } from '../../services/session.service';
 
 @Component({
   selector: 'app-header',
@@ -47,7 +48,7 @@ export class HeaderComponent
 
   menuAbierto: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private readonly session: SessionService) {}
 
   toggleMenu() {
     this.menuAbierto = !this.menuAbierto;
@@ -65,5 +66,15 @@ export class HeaderComponent
     localStorage.removeItem('token');
     this.closeMenu();
     this.router.navigate(['/home']);
+  }
+
+  /** Navega al perfil del usuario autenticado */
+  goToMyProfile(event?: Event): void {
+    if (event) { event.preventDefault(); }
+    const id = this.session.getUserId();
+    if (id !== null) {
+      this.router.navigate(['/ver-perfil', id]);
+    }
+    this.closeMenu();
   }
 }

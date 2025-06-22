@@ -1,0 +1,7 @@
+/* Fuente principal */
+.font-bree{font-family:'Bree Serif',serif;}
+
+/* Scrollbar para géneros (WebKit) */
+.border-2.overflow-y-auto::-webkit-scrollbar{width:8px;}
+.border-2.overflow-y-auto::-webkit-scrollbar-thumb{background:#888;border-radius:10px;}
+.border-2.overflow-y-auto::-webkit-scrollbar-thumb:hover{background:#555;} 
