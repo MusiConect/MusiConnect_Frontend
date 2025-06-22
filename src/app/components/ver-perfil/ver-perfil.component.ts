@@ -47,7 +47,9 @@ export class VerPerfilComponent implements OnInit {
     /** Acción para editar el perfil propio */
     editarPerfil(): void {
         // Redirigimos a otro componente de edición (deberá existir). Por ahora, consola.
-        console.log('Editar perfil (en construcción)');
+        if (this.esPropio()) {
+            this.router.navigate(['/editar-perfil']);
+        }
     }
 
     /** Acción para seguir / dejar de seguir un usuario */

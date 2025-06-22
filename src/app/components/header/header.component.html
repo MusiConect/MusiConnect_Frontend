@@ -50,7 +50,7 @@
 
     <!-- Área derecha -->
     <div class="hidden lg:flex items-center gap-4">
-      <a href="#" class="hover:underline hidden md:inline">Mi Perfil</a>
+      <a href="#" (click)="goToMyProfile($event)" class="hover:underline hidden md:inline">Mi Perfil</a>
       <button><img src="/Notificaciones.png" /></button>
       <div class="w-10 h-10 bg-gray-200 rounded-md overflow-hidden">
         <img src="/FotoPerfil.png" alt="Avatar" class="object-cover w-full h-full" />
@@ -93,7 +93,7 @@
     </div>
 
     <hr class="my-2" />
-    <a href="#" class="px-2 py-2 hover:bg-pink-100 rounded">Mi Perfil</a>
+    <a href="#" (click)="goToMyProfile($event)" class="px-2 py-2 hover:bg-pink-100 rounded">Mi Perfil</a>
     <button (click)="logout()" class="px-2 py-2 hover:bg-pink-100 rounded text-left w-full">Salir</button>
   </div>
 </header>
