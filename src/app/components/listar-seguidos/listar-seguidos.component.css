@@ -1,0 +1,7 @@
+/* Estilos específicos del componente ListarSeguidosComponent */
+
+@media (max-width: 640px) {
+    .container > div {
+        flex-direction: column;
+    }
+} 

@@ -15,16 +15,25 @@ export class HeaderComponent
 {
   showExplorar = false;
   showCrear = false;
+  showSeguimientos = false;
 
-  toggleDropdown(menu: 'explorar' | 'crear')
+  toggleDropdown(menu: 'explorar' | 'crear' | 'seguimientos')
   {
     if (menu === 'explorar') 
     {
       this.showExplorar = !this.showExplorar;
-      this.showCrear = false; // Cierrar el otro menú si se abre uno nuevo
+      this.showCrear = false;
+      this.showSeguimientos = false;
     } else {
-      this.showCrear = !this.showCrear;
-      this.showExplorar = false; // Cierrar el otro menú si se abre uno nuevo
+      if (menu === 'crear') {
+        this.showCrear = !this.showCrear;
+        this.showExplorar = false;
+        this.showSeguimientos = false;
+      } else {
+        this.showSeguimientos = !this.showSeguimientos;
+        this.showExplorar = false;
+        this.showCrear = false;
+      }
     }
   }
 
@@ -32,6 +41,7 @@ export class HeaderComponent
   {
     this.showExplorar = false;
     this.showCrear = false;
+    this.showSeguimientos = false;
   }
 
 
