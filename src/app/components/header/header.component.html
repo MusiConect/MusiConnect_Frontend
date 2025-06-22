@@ -31,7 +31,18 @@
       <a routerLink="/listar-convocatorias" class="hover:underline">Convocatorias</a>
       <a href="#" class="hover:underline">Publicaciones</a>
       <a routerLink="/listar-colaboraciones" (click)="closeMenu()" class="hover:underline">Colaboraciones</a>
-      <a href="#" class="hover:underline">Seguimientos</a>
+      <!-- Seguimientos -->
+      <div class="relative">
+        <button (click)="toggleDropdown('seguimientos')" class="flex items-center gap-1 hover:underline">
+          Seguimientos ▼
+        </button>
+        <ul *ngIf="showSeguimientos" class="absolute z-10 bg-white text-black rounded shadow-md mt-2 w-40">
+          <li>
+            <a routerLink="/listar-seguidos" (click)="closeDropdowns()" class="block px-4 py-2 hover:bg-gray-200">Perfiles</a>
+          </li>
+          <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Bandas</li>
+        </ul>
+      </div>
       <!-- Crear -->
       <div class="relative">
         <button (click)="toggleDropdown('crear')" class="flex items-center gap-1 hover:underline">
@@ -78,6 +89,17 @@
     <a routerLink="/home" (click)="closeMenu()" class="block py-2">Inicio</a>
     <a routerLink="/listar-colaboraciones" (click)="closeMenu()" class="block py-2">Colaboraciones</a>
     <a routerLink="/listar-convocatorias" (click)="closeMenu()" class="block py-2">Convocatorias</a>
+    <!-- Seguimientos móvil -->
+    <div>
+      <button (click)="toggleDropdown('seguimientos')" class="w-full text-left px-2 py-2 hover:bg-pink-100 rounded flex justify-between items-center">
+        Seguimientos
+        <span>▼</span>
+      </button>
+      <ul *ngIf="showSeguimientos" class="ml-4 mt-1 space-y-1">
+        <li class="hover:underline"><a routerLink="/listar-seguidos" (click)="closeMenu()">Perfiles</a></li>
+        <li class="hover:underline cursor-pointer"><a href="#" (click)="closeMenu()">Bandas</a></li>
+      </ul>
+    </div>
     <a href="#" (click)="closeMenu()" class="block py-2">Artistas</a>
 
     <!-- Crear móvil -->
