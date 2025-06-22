@@ -50,7 +50,7 @@ export class ListarConvocatoriasComponent implements OnInit {
                 next: (data) => {
                     this.favoritasIds = new Set(data.map((c) => c.convocationId));
                     this.convocatorias = data.map((c) => {
-                        const expirada = new Date(c.fechaLimite) < new Date();
+                        const expirada = this.esExpirada(c.fechaLimite);
                         return {
                             ...c,
                             esFavorita: true,
@@ -85,7 +85,7 @@ export class ListarConvocatoriasComponent implements OnInit {
                     next: (favs) => {
                         this.favoritasIds = new Set(favs.map((f) => f.convocationId));
                         this.convocatorias = todas.map((c) => {
-                            const expirada = new Date(c.fechaLimite) < new Date();
+                            const expirada = this.esExpirada(c.fechaLimite);
                             return {
                                 ...c,
                                 esFavorita: this.favoritasIds.has(c.convocationId),
@@ -99,7 +99,7 @@ export class ListarConvocatoriasComponent implements OnInit {
                     error: () => {
                         // Sin favoritas
                         this.convocatorias = todas.map((c) => {
-                            const expirada = new Date(c.fechaLimite) < new Date();
+                            const expirada = this.esExpirada(c.fechaLimite);
                             return {
                                 ...c,
                                 esFavorita: false,
@@ -158,5 +158,22 @@ export class ListarConvocatoriasComponent implements OnInit {
     verDetalle(conv: CardConvocation): void {
         if (conv.expirada) return;
         this.router.navigate(['/mostrar-convocatoria', conv.convocationId]);
+    }
+
+    /**
+     * Determina si una convocatoria ha expirado.
+     *
+     * Se asume que la fecha límite (`yyyy-MM-dd`) es válida **hasta las 23:59:59**
+     * de la zona horaria local. Para evitar errores por desplazamiento UTC, se
+     * añade una hora explícita.
+     *
+     * @param fechaLimite Fecha límite en formato ISO – puede venir solo con la parte de fecha.
+     */
+    private esExpirada(fechaLimite: string): boolean {
+        // Si incluye componente horario, usar directamente
+        const limite = fechaLimite.includes('T')
+            ? new Date(fechaLimite)
+            : new Date(`${fechaLimite}T23:59:59`);
+        return limite.getTime() < Date.now();
     }
 } 

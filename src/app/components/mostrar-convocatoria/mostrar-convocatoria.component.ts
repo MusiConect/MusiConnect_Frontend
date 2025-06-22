@@ -33,7 +33,7 @@ export class MostrarConvocatoriaComponent implements OnInit {
         // Obtener convocatoria
         this.convocationService.obtenerPorId(id).subscribe({
             next: (data) => {
-                const expirada = new Date(data.fechaLimite) < new Date();
+                const expirada = this.esExpirada(data.fechaLimite);
                 if (!data || expirada) {
                     // Redirigir si expirada o inexistente
                     this.router.navigate(['/listar-convocatorias']);
@@ -93,5 +93,14 @@ export class MostrarConvocatoriaComponent implements OnInit {
     /** Formatea fecha al estilo dd/MM/yyyy */
     fechaFormateada(): string {
         return this.convocatoria ? formatDate(this.convocatoria.fechaLimite, 'dd/MM/yyyy', 'es-ES') : '';
+    }
+
+    /**
+     * Determina si la convocatoria ha expirado considerando la zona horaria local.
+     * @param fechaLimite Fecha límite en formato ISO (yyyy-MM-dd o yyyy-MM-ddTHH:mm:ss)
+     */
+    private esExpirada(fechaLimite: string): boolean {
+        const limite = fechaLimite.includes('T') ? new Date(fechaLimite) : new Date(`${fechaLimite}T23:59:59`);
+        return limite.getTime() < Date.now();
     }
 } 

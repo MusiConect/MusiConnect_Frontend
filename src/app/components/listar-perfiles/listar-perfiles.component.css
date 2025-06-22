@@ -1,0 +1,8 @@
+/* Estilos específicos del componente ListarPerfilesComponent */
+
+/* Placeholder to ensure cards occupy full width on small screens */
+@media (max-width: 640px) {
+    .container > div {
+        flex-direction: column;
+    }
+} 
