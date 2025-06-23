@@ -1,0 +1,44 @@
+<div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+  <h3 class="text-lg font-semibold mb-4">Añadir comentario</h3>
+
+  <form #form="ngForm" (ngSubmit)="publicarComentario()" novalidate [class.opacity-50]="cargando">
+    <!-- Campo de comentario -->
+    <div class="mb-4">
+      <textarea
+        id="comentario"
+        name="comentario"
+        required
+        maxlength="300"
+        [(ngModel)]="contenido"
+        #comentarioCtrl="ngModel"
+        placeholder="Escribe tu comentario..."
+        class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm resize-none"
+        rows="3"
+        [disabled]="cargando"
+      ></textarea>
+      <div class="flex justify-between items-center mt-2">
+        <p *ngIf="comentarioCtrl.invalid && comentarioCtrl.touched" class="text-red-600 text-xs">
+          El comentario es obligatorio.
+        </p>
+        <span class="text-xs text-gray-500">{{ contenido.length }}/300</span>
+      </div>
+    </div>
+
+    <!-- Botón de publicación -->
+    <div class="flex justify-end">
+      <button
+        type="submit"
+        class="bg-[#FF00FF] text-white text-sm font-bold px-6 py-2 rounded-lg hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        [disabled]="form.invalid || contenido.length > 300 || cargando"
+      >
+        <span *ngIf="!cargando">Comentar 💬</span>
+        <span *ngIf="cargando">Publicando...</span>
+      </button>
+    </div>
+  </form>
+
+  <!-- Mensaje de respuesta -->
+  <div *ngIf="mensaje" class="mt-4 text-center text-sm font-semibold" [class]="mensaje.includes('✅') ? 'text-green-600' : 'text-red-600'">
+    {{ mensaje }}
+  </div>
+</div> 

@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { CollaborationCreate } from '../../models/collaboration.model';
 import { CollaborationService } from '../../services/collaboration.service';
 import { SessionService } from '../../services/session.service';
+import { NotificationService } from '../../services/notification.service';
+import { PostService } from '../../services/post.service';
 import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
@@ -22,7 +24,9 @@ export class CrearColaboracionComponent {
 
   constructor(
     private collaborationService: CollaborationService,
-    private session: SessionService
+    private session: SessionService,
+    private readonly notifications: NotificationService,
+    private readonly postService: PostService
   ) {}
 
   publicar(form: NgForm) {
@@ -41,8 +45,17 @@ export class CrearColaboracionComponent {
     };
 
     this.collaborationService.crearColaboracion(nuevaColaboracion).subscribe({
-      next: () => {
+      next: (res) => {
         this.mensaje = '✅ ¡Colaboración creada con éxito!';
+
+        // Notificación y publicación
+        this.notifications.show('Creación de tu colaboración puesta en publicaciones!');
+
+        const nombreUsuario = this.session.getNombreArtistico() ?? 'Alguien';
+        const colaboracionId = (res as any).colaboracionId ?? (res as any).id ?? 0;
+        const content = `${nombreUsuario} ha creado una colaboración llamada <a href='/mostrar-colaboracion/${colaboracionId}' class='text-blue-600 underline'>${this.nombre}</a> ¡vayan a darle un vistaso si desean!`;
+        const usuarioId = this.session.getUserId() ?? 0;
+        this.postService.crearPost({ usuarioId, contenido: content, tipo: 'TEXTO' }).subscribe();
 
         // ✅ Limpiar campos del formulario, pero las variables en el componente
         this.nombre = '';

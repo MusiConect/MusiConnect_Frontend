@@ -1,0 +1,88 @@
+<div class="max-w-4xl mx-auto px-6 py-8 font-bree">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-black">Publicaciones</h1>
+  </div>
+
+  <!-- Estado de carga -->
+  <div *ngIf="cargando" class="text-center py-12">
+    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#FF00FF]"></div>
+    <p class="mt-4 text-gray-600">Cargando publicaciones...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error && !cargando" class="text-center py-12">
+    <p class="text-red-600 text-lg">{{ error }}</p>
+    <button
+      (click)="cargarPublicaciones()"
+      class="mt-4 bg-[#FF00FF] text-white px-6 py-2 rounded-lg hover:bg-pink-600 transition-colors"
+    >
+      Reintentar
+    </button>
+  </div>
+
+  <!-- Lista de publicaciones -->
+  <div *ngIf="!cargando && !error" class="space-y-6">
+    <div *ngIf="publicaciones.length === 0" class="text-center py-12">
+      <p class="text-gray-600 text-lg">No hay publicaciones disponibles.</p>
+    </div>
+
+    <div
+      *ngFor="let publicacion of publicaciones"
+      class="bg-white rounded-lg shadow-lg p-6 border-2 border-black"
+    >
+      <!-- Header de la publicación -->
+      <div class="flex items-center gap-4 mb-4">
+        <img
+          src="/FotoPerfil.png"
+          alt="avatar"
+          class="w-12 h-12 rounded-full object-cover"
+        />
+        <div class="flex-1">
+          <h3
+            class="font-bold text-lg cursor-pointer hover:underline"
+            (click)="verPerfil(publicacion.autorId, publicacion.autor)"
+          >
+            {{ publicacion.autor }}
+          </h3>
+          <p class="text-gray-500 text-sm">{{ formatearFecha(publicacion.fechaPublicacion) }}</p>
+        </div>
+        <!-- Iconos de acciones: eliminar y editar -->
+        <div *ngIf="publicacion.autor === sessionService.getNombreArtistico()" class="flex items-center gap-2 ml-auto">
+            <img
+                src="/trash.png"
+                alt="Eliminar"
+                class="w-5 h-5 cursor-pointer"
+                (click)="eliminarPost(publicacion.postId)"
+            />
+            <img
+                src="/Edit.png"
+                alt="Editar"
+                class="w-5 h-5 cursor-pointer"
+                (click)="editarPost(publicacion.postId)"
+            />
+        </div>
+      </div>
+
+      <!-- Contenido de la publicación -->
+      <div class="mb-4">
+        <p
+          class="text-gray-800 text-lg leading-relaxed"
+          [innerHTML]="publicacion.contenido"
+        ></p>
+      </div>
+
+      <!-- Acciones (placeholder) -->
+      <div class="flex items-center gap-6 pt-4 border-t border-gray-200">
+        <button (click)="toggleComentarios(publicacion.postId)" class="flex items-center gap-2 text-gray-600 hover:text-blue-500 transition-colors">
+          <span class="text-xl">💬</span>
+          <span>{{ publicacion.comentarios?.length || 0 }}</span>
+        </button>
+      </div>
+
+      <!-- Panel comentarios -->
+      <div *ngIf="expandedPostId === publicacion.postId" class="mt-4">
+        <app-listar-comentarios [postId]="publicacion.postId" (comentariosChanged)="actualizarConteoComentarios(publicacion, $event)"></app-listar-comentarios>
+      </div>
+    </div>
+  </div>
+</div> 

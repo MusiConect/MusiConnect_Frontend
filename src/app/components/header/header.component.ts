@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { HostListener } from '@angular/core';
 import { SessionService } from '../../services/session.service';
+import { NotificationService } from '../../services/notification.service';
+import { Subscription, timer } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +13,7 @@ import { SessionService } from '../../services/session.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent 
+export class HeaderComponent implements OnDestroy
 {
   showExplorar = false;
   showCrear = false;
@@ -58,7 +60,29 @@ export class HeaderComponent
 
   menuAbierto: boolean = false;
 
-  constructor(private router: Router, private readonly session: SessionService) {}
+  /** Mensaje de notificación actual (o null si no hay) */
+  mensajeNotificacion: string | null = null;
+
+  /** Subscripción al flujo de notificaciones */
+  private notSub?: Subscription;
+
+  constructor(
+    private router: Router,
+    private readonly session: SessionService,
+    private readonly notifications: NotificationService
+  ) {
+    // Suscribimos inmediatamente a las notificaciones globales.
+    this.notSub = this.notifications.mensaje$.subscribe((msg) => {
+      if (msg) {
+        this.mensajeNotificacion = msg;
+        // Ocultamos automáticamente tras 3 s.
+        timer(3000).subscribe(() => {
+          this.mensajeNotificacion = null;
+          this.notifications.clear();
+        });
+      }
+    });
+  }
 
   toggleMenu() {
     this.menuAbierto = !this.menuAbierto;
@@ -86,5 +110,9 @@ export class HeaderComponent
       this.router.navigate(['/ver-perfil', id]);
     }
     this.closeMenu();
+  }
+
+  ngOnDestroy(): void {
+    this.notSub?.unsubscribe();
   }
 }
