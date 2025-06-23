@@ -4,7 +4,7 @@
  * Todos los métodos devuelven Observables que deben ser manejados por los componentes.
  */
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import {
@@ -22,8 +22,8 @@ export class ConvocationService {
     constructor(private http: HttpClient) {}
 
     /** POST /convocations */
-    crearConvocatoria(data: ConvocationCreate): Observable<ConvocationResponse> {
-        return this.http.post<ConvocationResponse>(this.apiUrl, data);
+    crearConvocatoria(data: ConvocationCreate): Observable<HttpResponse<ConvocationResponse>> {
+        return this.http.post<ConvocationResponse>(this.apiUrl, data, { observe: 'response' });
     }
 
     /** PUT /convocations/{id} */

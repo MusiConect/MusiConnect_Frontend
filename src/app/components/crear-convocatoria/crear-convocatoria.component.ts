@@ -44,14 +44,31 @@ export class CrearConvocatoriaComponent {
         };
 
         this.convocationService.crearConvocatoria(payload).subscribe({
-            next: (res) => {
+            next: (resp) => {
                 // Emitir notificación
                 this.mensaje = '✅ ¡Convocatoria publicada con éxito!';
                 this.notifications.show('Creación de tu convocatoria puesta en publicaciones!');
 
+                // Obtener ID de la nueva convocatoria
+                const bodyId = (resp.body as any)?.convocationId ?? (resp.body as any)?.convocatoriaId ?? (resp.body as any)?.id;
+                let convId = bodyId;
+
+                // Si no viene en el body, intentamos leer la cabecera Location → /convocations/{id}
+                if (!convId) {
+                    const loc = resp.headers.get('Location') ?? resp.headers.get('location');
+                    if (loc) {
+                        const match = loc.match(/\/(\d+)$/);
+                        if (match) {
+                            convId = +match[1];
+                        }
+                    }
+                }
+
+                // Fallback definitivo
+                convId = convId || 0;
+
                 // Crear publicación automática
                 const nombreUsuario = this.session.getNombreArtistico() ?? 'Alguien';
-                const convId = (res as any).convocatoriaId ?? (res as any).id ?? 0;
                 const content = `${nombreUsuario} ha creado una convocatoria llamada <a href='/mostrar-convocatoria/${convId}' class='text-blue-600 underline'>${this.titulo}</a> ¡vayan a darle un vistaso si desean!`;
                 const usuarioId = this.session.getUserId() ?? 0;
                 this.postService.crearPost({ usuarioId, contenido: content, tipo: 'TEXTO' }).subscribe();
