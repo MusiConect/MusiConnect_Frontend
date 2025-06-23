@@ -1,0 +1,74 @@
+<div class="max-w-4xl mx-auto px-6 py-8 font-bree">
+  <h1 class="text-3xl font-black mb-8">Editar publicación</h1>
+
+  <!-- Estado de carga inicial -->
+  <div *ngIf="cargandoInicial" class="text-center py-12">
+    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#FF00FF]"></div>
+    <p class="mt-4 text-gray-600">Cargando publicación...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error && !cargandoInicial" class="text-center py-12">
+    <p class="text-red-600 text-lg">{{ error }}</p>
+    <button
+      (click)="cancelar()"
+      class="mt-4 bg-[#FF00FF] text-white px-6 py-2 rounded-lg hover:bg-pink-600 transition-colors"
+    >
+      Volver
+    </button>
+  </div>
+
+  <!-- Formulario de edición -->
+  <div *ngIf="!cargandoInicial && !error" class="bg-white rounded-lg shadow-lg p-6">
+    <form #form="ngForm" (ngSubmit)="actualizar()" novalidate [class.opacity-50]="cargando">
+      <!-- Contenido de la publicación -->
+      <div class="mb-6">
+        <label for="contenido" class="block text-lg font-semibold mb-2">Contenido</label>
+        <textarea
+          id="contenido"
+          name="contenido"
+          required
+          maxlength="500"
+          [(ngModel)]="contenido"
+          #contenidoCtrl="ngModel"
+          placeholder="¿En qué estás pensando?"
+          class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg resize-none"
+          rows="6"
+          [disabled]="cargando"
+        ></textarea>
+        <div class="flex justify-between items-center mt-2">
+          <p *ngIf="contenidoCtrl.invalid && contenidoCtrl.touched" class="text-red-600 text-sm">
+            El contenido es obligatorio.
+          </p>
+          <span class="text-sm text-gray-500">{{ contenido.length }}/500</span>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="flex gap-4 justify-center">
+        <button
+          type="button"
+          (click)="cancelar()"
+          class="bg-gray-500 text-white text-xl font-bold px-8 py-3 rounded-xl hover:bg-gray-600 transition-colors"
+          [disabled]="cargando"
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="submit"
+          class="bg-[#FF00FF] text-white text-xl font-bold px-8 py-3 rounded-xl hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          [disabled]="form.invalid || contenido.length > 500 || cargando"
+        >
+          <span *ngIf="!cargando">Actualizar 📝</span>
+          <span *ngIf="cargando">Actualizando...</span>
+        </button>
+      </div>
+    </form>
+
+    <!-- Mensaje de respuesta -->
+    <div *ngIf="mensaje" class="mt-6 text-center text-lg font-semibold" [class]="mensaje.includes('✅') ? 'text-green-600' : 'text-red-600'">
+      {{ mensaje }}
+    </div>
+  </div>
+</div> 

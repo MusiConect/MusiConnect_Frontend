@@ -31,7 +31,7 @@
         </ul>
       </div>
       <a routerLink="/listar-convocatorias" class="hover:underline">Convocatorias</a>
-      <a href="#" class="hover:underline">Publicaciones</a>
+      <a routerLink="/publicaciones" (click)="closeMenu()" class="hover:underline">Publicaciones</a>
       <a routerLink="/listar-colaboraciones" (click)="closeMenu()" class="hover:underline">Colaboraciones</a>
       <!-- Seguimientos -->
       <div class="relative">
@@ -59,7 +59,9 @@
           <li>
             <a routerLink="/crear-convocatoria" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-200">Convocatoria</a>
           </li>
-          <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Publicacion</li>
+          <li>
+            <a routerLink="/crear-publicacion" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-200">Publicacion</a>
+          </li>
           <li>
             <a routerLink="/crear-banda" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-200">Banda</a>
           </li>
@@ -70,7 +72,16 @@
     <!-- Área derecha -->
     <div class="hidden lg:flex items-center gap-4">
       <a href="#" (click)="goToMyProfile($event)" class="hover:underline hidden md:inline">Mi Perfil</a>
-      <button><img src="/Notificaciones.png" /></button>
+      <div class="relative">
+        <button aria-label="Notificaciones"><img src="/Notificaciones.png" alt="Notificaciones" /></button>
+        <!-- Pop-up de notificación -->
+        <div
+          *ngIf="mensajeNotificacion"
+          class="absolute right-0 mt-2 w-72 bg-white border border-gray-300 rounded shadow-lg p-3 text-sm text-black z-50"
+        >
+          {{ mensajeNotificacion }}
+        </div>
+      </div>
       <div class="w-10 h-10 bg-gray-200 rounded-md overflow-hidden">
         <img src="/FotoPerfil.png" alt="Avatar" class="object-cover w-full h-full" />
       </div>
@@ -117,7 +128,7 @@
       <ul *ngIf="showCrear" class="ml-4 mt-1 space-y-1">
         <li><a routerLink="/crear-colaboracion" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Colaboración</a></li>
         <li><a routerLink="/crear-convocatoria" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Convocatoria</a></li>
-        <li><a href="#" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Publicación</a></li>
+        <li><a routerLink="/crear-publicacion" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Publicación</a></li>
         <li><a routerLink="/crear-banda" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Banda</a></li>
       </ul>
     </div>

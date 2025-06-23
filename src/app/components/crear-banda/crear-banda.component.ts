@@ -7,6 +7,8 @@ import { SessionService } from '../../services/session.service';
 import { BandRequest } from '../../models/band.model';
 import { finalize } from 'rxjs/operators';
 import { BandSidebarComponent } from '../band-sidebar/band-sidebar.component';
+import { NotificationService } from '../../services/notification.service';
+import { PostService } from '../../services/post.service';
 
 @Component({
   selector: 'app-crear-banda',
@@ -22,16 +24,42 @@ export class CrearBandaComponent implements OnInit {
   successMessage = '';
   
   generosMusicales = [
-    'Rock', 'Pop', 'Jazz', 'Blues', 'Country', 'Hip Hop', 'R&B', 'Electronic',
-    'Folk', 'Reggae', 'Punk', 'Metal', 'Indie', 'Alternative', 'Classical',
-    'Funk', 'Soul', 'Gospel', 'Latin', 'World Music'
+    'ROCK',
+    'POP',
+    'JAZZ',
+    'CLASSICAL',
+    'HIP_HOP',
+    'REGGAETON',
+    'BLUES',
+    'ELECTRONIC',
+    'FOLK',
+    'LATIN',
+    'COUNTRY',
+    'METAL',
+    'RNB',
+    'SOUL',
+    'PUNK',
+    'DISCO',
+    'FUNK',
+    'SALSA',
+    'CUMBIA',
+    'BACHATA',
+    'K_POP',
+    'OPERA',
+    'SOUNDTRACK',
+    'SAYA',
+    'CAPORAL',
+    'INDIE',
+    'OTHER',
   ];
 
   constructor(
     private fb: FormBuilder,
     private bandService: BandService,
     private sessionService: SessionService,
-    private router: Router
+    private router: Router,
+    private readonly notifications: NotificationService,
+    private readonly postService: PostService
   ) {}
 
   ngOnInit(): void {
@@ -73,6 +101,19 @@ export class CrearBandaComponent implements OnInit {
           next: (response) => {
             this.successMessage = `¡Banda "${response.nombre}" creada exitosamente!`;
             
+            // 1. Mostrar notificación en el header
+            const notifMsg = `Creación de tu banda puesta en publicaciones!`;
+            this.notifications.show(notifMsg);
+
+            // 2. Crear publicación automática
+            const nombreUsuario = this.sessionService.getNombreArtistico() ?? 'Alguien';
+            const contenido = `${nombreUsuario} ha creado una banda llamada <a href='/mostrar-banda/${response.bandId}' class='text-blue-600 underline'>${response.nombre}</a> ¡vayan a darle un vistaso si desean!`;
+            const usuarioId = this.sessionService.getUserId() ?? 0;
+            this.postService.crearPost({ usuarioId, contenido, tipo: 'TEXTO' }).subscribe({
+              next: () => {},
+              error: () => {}
+            });
+
             setTimeout(() => {
               this.router.navigate(['/bandas']);
             }, 2000);

@@ -1,0 +1,49 @@
+<div class="pt-4">
+  <!-- Loader -->
+  <div *ngIf="cargando" class="text-center py-4">
+    Cargando comentarios...
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error && !cargando" class="text-red-600 text-sm text-center py-4">
+    {{ error }}
+  </div>
+
+  <!-- Lista comentarios -->
+  <ul *ngIf="!cargando && !error" class="space-y-3">
+    <li *ngFor="let c of comentarios" class="border-b pb-2 relative">
+        <!-- Vista o edición -->
+        <ng-container *ngIf="editandoComentarioId !== c.comentarioId; else editForm">
+            <p class="text-sm font-medium cursor-pointer hover:underline" (click)="verPerfilAutor(c.autor)">
+                {{ c.autor }}
+                <span class="text-gray-500 text-xs">{{ c.fechaComentario | date:'dd/MM/yyyy HH:mm' }}</span>
+            </p>
+            <p class="text-gray-700 text-sm">{{ c.contenido }}</p>
+        </ng-container>
+
+        <!-- Formulario de edición -->
+        <ng-template #editForm>
+            <p class="text-sm font-medium cursor-pointer hover:underline" (click)="verPerfilAutor(c.autor)">
+                {{ c.autor }}
+                <span class="text-gray-500 text-xs">{{ c.fechaComentario | date:'dd/MM/yyyy HH:mm' }}</span>
+            </p>
+            <input [(ngModel)]="nuevoContenido" class="border border-gray-300 rounded w-full p-1 text-sm" />
+            <button
+                class="mt-1 px-3 py-1 text-white"
+                style="background-color:#FF8DFF; border-radius:15px;"
+                (click)="confirmarEditarComentario(c.comentarioId)"
+            >Editar</button>
+        </ng-template>
+
+        <!-- Iconos -->
+        <div *ngIf="c.autor === sessionService.getNombreArtistico() && editandoComentarioId !== c.comentarioId" class="absolute top-0 right-0 flex gap-2">
+            <img src="/trash.png" alt="Eliminar" class="w-4 h-4 cursor-pointer" (click)="eliminarComentario(c.comentarioId)" />
+            <img src="/Edit.png" alt="Editar" class="w-4 h-4 cursor-pointer" (click)="activarEdicion(c)" />
+        </div>
+    </li>
+    <li *ngIf="comentarios.length === 0" class="text-gray-500 text-sm text-center">Sin comentarios.</li>
+  </ul>
+
+  <!-- Componente crear comentario -->
+  <app-crear-comentario [publicacionId]="postId" (comentarioPublicado)="onComentarioPublicado()"></app-crear-comentario>
+</div> 

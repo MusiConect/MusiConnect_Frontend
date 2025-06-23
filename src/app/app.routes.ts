@@ -29,6 +29,9 @@ export const routes: Routes = [
   { path: 'editar-banda/:id', loadComponent: () => import('./components/editar-banda/editar-banda.component').then(m => m.EditarBandaComponent), canActivate: [authGuard] },
   { path: 'bandas', loadComponent: () => import('./components/listar-bandas/listar-bandas.component').then(m => m.ListarBandasComponent), canActivate: [authGuard] },
   { path: 'mostrar-banda/:id', loadComponent: () => import('./components/mostrar-banda/mostrar-banda.component').then(m => m.MostrarBandaComponent) },
+  { path: 'crear-publicacion', loadComponent: () => import('./components/crear-publicacion/crear-publicacion.component').then(m => m.CrearPublicacionComponent), canActivate: [authGuard] },
+  { path: 'editar-publicacion/:id', loadComponent: () => import('./components/editar-publicacion/editar-publicacion.component').then(m => m.EditarPublicacionComponent), canActivate: [authGuard] },
+  { path: 'publicaciones', loadComponent: () => import('./components/listar-publicaciones/listar-publicaciones.component').then(m => m.ListarPublicacionesComponent) },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];

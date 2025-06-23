@@ -4,6 +4,8 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ConvocationCreate } from '../../models/convocation.model';
 import { ConvocationService } from '../../services/convocation.service';
 import { SessionService } from '../../services/session.service';
+import { NotificationService } from '../../services/notification.service';
+import { PostService } from '../../services/post.service';
 
 @Component({
     selector: 'app-crear-convocatoria',
@@ -23,7 +25,9 @@ export class CrearConvocatoriaComponent {
 
     constructor(
         private convocationService: ConvocationService,
-        private session: SessionService
+        private session: SessionService,
+        private readonly notifications: NotificationService,
+        private readonly postService: PostService
     ) {}
 
     /** Envía la convocatoria al backend */
@@ -40,8 +44,17 @@ export class CrearConvocatoriaComponent {
         };
 
         this.convocationService.crearConvocatoria(payload).subscribe({
-            next: () => {
+            next: (res) => {
+                // Emitir notificación
                 this.mensaje = '✅ ¡Convocatoria publicada con éxito!';
+                this.notifications.show('Creación de tu convocatoria puesta en publicaciones!');
+
+                // Crear publicación automática
+                const nombreUsuario = this.session.getNombreArtistico() ?? 'Alguien';
+                const convId = (res as any).convocatoriaId ?? (res as any).id ?? 0;
+                const content = `${nombreUsuario} ha creado una convocatoria llamada <a href='/mostrar-convocatoria/${convId}' class='text-blue-600 underline'>${this.titulo}</a> ¡vayan a darle un vistaso si desean!`;
+                const usuarioId = this.session.getUserId() ?? 0;
+                this.postService.crearPost({ usuarioId, contenido: content, tipo: 'TEXTO' }).subscribe();
 
                 // Limpiar valores y formulario
                 this.titulo = '';
