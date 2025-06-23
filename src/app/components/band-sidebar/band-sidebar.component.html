@@ -1,0 +1,18 @@
+<div [ngClass]="collapsed ? 'w-20 p-2' : 'w-64 p-6'" class="transition-all duration-300 bg-[#F1EFEF] border-2 border-black rounded-[15px] h-[50vh] self-center my-auto">
+  <!-- Botón para desplegar/contraer -->
+  <button (click)="toggleSidebar()" aria-label="Alternar barra lateral" class="focus:outline-none mb-4">
+    <img src="/Sidebar.png" alt="Icono menú" class="w-6 h-6">
+  </button>
+
+  <!-- Contenido visible solo cuando no está colapsado -->
+  <div *ngIf="!collapsed">
+    <div class="flex items-center mb-6">
+      <h2 class="text-xl font-bold" i18n>OPCIONES</h2>
+    </div>
+    <nav class="space-y-4">
+      <a routerLink="/crear-banda" routerLinkActive="!bg-[#000784] !text-white" class="block w-full text-center text-white bg-pink-300 font-bold py-3 px-4 rounded-lg shadow-md hover:bg-pink-400" i18n>Crear Banda</a>
+      <a routerLink="/invitar-miembro" routerLinkActive="!bg-[#000784] !text-white" class="block w-full text-center text-white bg-pink-300 font-bold py-3 px-4 rounded-lg shadow-md hover:bg-pink-400" i18n>Invitar a Banda</a>
+      <a routerLink="/bandas" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="!bg-[#000784] !text-white" class="block w-full text-center text-white bg-pink-300 font-bold py-3 px-4 rounded-lg shadow-md hover:bg-pink-400" i18n>Actualizar/Listar Bandas</a>
+    </nav>
+  </div>
+</div> 

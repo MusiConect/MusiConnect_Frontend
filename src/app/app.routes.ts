@@ -23,6 +23,12 @@ export const routes: Routes = [
   { path: 'editar-perfil', loadComponent: () => import('./components/editar-perfil/editar-perfil.component').then(m => m.EditarPerfilComponent), canActivate: [authGuard] },
   { path: 'listar-perfiles', loadComponent: () => import('./components/listar-perfiles/listar-perfiles.component').then(m => m.ListarPerfilesComponent), canActivate: [authGuard] },
   { path: 'listar-seguidos', loadComponent: () => import('./components/listar-seguidos/listar-seguidos.component').then(m => m.ListarSeguidosComponent), canActivate: [authGuard] },
+  { path: 'bandas-seguidas', loadComponent: () => import('./components/listar-bandas-seguidas/listar-bandas-seguidas.component').then(m => m.ListarBandasSeguidasComponent), canActivate: [authGuard] },
+  { path: 'crear-banda', loadComponent: () => import('./components/crear-banda/crear-banda.component').then(m => m.CrearBandaComponent), canActivate: [authGuard] },
+  { path: 'invitar-miembro', loadComponent: () => import('./components/invitar-miembro/invitar-miembro.component').then(m => m.InvitarMiembroComponent), canActivate: [authGuard] },
+  { path: 'editar-banda/:id', loadComponent: () => import('./components/editar-banda/editar-banda.component').then(m => m.EditarBandaComponent), canActivate: [authGuard] },
+  { path: 'bandas', loadComponent: () => import('./components/listar-bandas/listar-bandas.component').then(m => m.ListarBandasComponent), canActivate: [authGuard] },
+  { path: 'mostrar-banda/:id', loadComponent: () => import('./components/mostrar-banda/mostrar-banda.component').then(m => m.MostrarBandaComponent) },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];

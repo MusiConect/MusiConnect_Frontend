@@ -1,0 +1,69 @@
+<div class="flex h-screen bg-gray-100">
+  <app-band-sidebar></app-band-sidebar>
+
+  <!-- Main Content -->
+  <div class="flex-1 p-10 overflow-y-auto">
+    <div class="max-w-4xl mx-auto">
+      <!-- Tus Bandas -->
+      <div class="bg-[#F1EFEF] border-2 border-black p-6 rounded-2xl shadow-2xl mb-8">
+        <h2 class="text-2xl font-bold mb-4">Tus Bandas</h2>
+        <div *ngIf="isLoading" class="text-center">Cargando...</div>
+        <div *ngIf="!isLoading && myBands.length === 0" class="text-center text-gray-500">No administras ninguna banda.</div>
+        <ul *ngIf="!isLoading && myBands.length > 0" class="space-y-3">
+          <li *ngFor="let band of myBands" class="p-4 border-2 border-black rounded-lg flex justify-between items-center">
+            <div>
+              <h3 (click)="viewBand(band.bandId)" class="font-bold text-lg cursor-pointer hover:underline" aria-label="Ver detalles de la banda">{{ band.nombre }}</h3>
+              <p class="text-sm text-gray-600">{{ band.descripcion }}</p>
+            </div>
+            <div class="space-x-2">
+              <button (click)="editBand(band.bandId)" class="bg-[#FF8DFF] text-black px-3 py-1 rounded-md hover:opacity-90">Editar</button>
+              <button (click)="deleteBand(band.bandId)" class="bg-[#000784] text-white px-3 py-1 rounded-md hover:opacity-90">Eliminar</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Buscar Banda por nombre -->
+      <div class="bg-[#F1EFEF] border-2 border-black p-6 rounded-2xl shadow-2xl">
+        <h2 class="text-2xl font-bold mb-4">Buscar Banda por nombre</h2>
+        <form [formGroup]="searchForm" (ngSubmit)="searchByName()">
+          <div class="flex space-x-2">
+            <input type="text" formControlName="bandName" class="flex-grow px-4 py-2 border-2 border-black rounded-lg" placeholder="Ingrese el nombre de la banda"/>
+            <button type="submit" [disabled]="searchForm.invalid" class="bg-[#FF8DFF] text-black font-bold px-6 py-2 rounded-lg hover:opacity-90 disabled:bg-gray-300">Buscar</button>
+          </div>
+        </form>
+        
+        <div *ngIf="isSearching" class="text-center mt-4">Buscando...</div>
+        
+        <div *ngIf="searchedBand" class="mt-4 p-4 border rounded-lg">
+          <h3 (click)="viewBand(searchedBand.bandId)" class="font-bold text-lg cursor-pointer hover:underline" aria-label="Ver detalles de la banda">{{ searchedBand.nombre }}</h3>
+          <p class="text-sm text-gray-600">{{ searchedBand.descripcion }}</p>
+          <p class="text-sm text-gray-500 mt-1">Administrador: {{ searchedBand.administradorNombreArtistico }}</p>
+        </div>
+
+        <div *ngIf="searchError" class="mt-4 text-center text-red-600">
+          {{ searchError }}
+        </div>
+      </div>
+
+      <!-- Todas las Bandas existentes -->
+      <div class="bg-[#F1EFEF] border-2 border-black p-6 rounded-2xl shadow-2xl mt-8">
+        <h2 class="text-2xl font-bold mb-4">Todas las bandas:</h2>
+        <div *ngIf="otherBands.length === 0" class="text-center text-gray-500">Sin bandas existentes</div>
+        <ul *ngIf="otherBands.length > 0" class="space-y-3">
+          <li *ngFor="let band of otherBands" class="p-4 border-2 border-black rounded-lg bg-white flex justify-between items-start">
+            <div>
+              <h3 (click)="viewBand(band.bandId)" class="font-bold text-lg cursor-pointer hover:underline" aria-label="Ver detalles de la banda">{{ band.nombre }}</h3>
+              <p class="text-sm">{{ band.descripcion }}</p>
+              <p class="text-sm font-bold">Administrador: <span class="font-normal">{{ band.administradorNombreArtistico }}</span></p>
+              <p class="text-sm font-bold">Género: <span class="font-normal">{{ band.generosMusicales.join(', ') }}</span></p>
+            </div>
+            <button (click)="toggleFollow(band)" aria-label="Seguir o dejar de seguir banda" class="ml-4 flex-shrink-0">
+              <img src="/Follow.png" alt="Icono seguir" width="50" height="50" />
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

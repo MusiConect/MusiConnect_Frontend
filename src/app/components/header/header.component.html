@@ -25,7 +25,9 @@
           <li>
             <a routerLink="/listar-perfiles" (click)="closeDropdowns()" class="block px-4 py-2 hover:bg-gray-200">Perfiles</a>
           </li>
-          <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Bandas</li>
+          <li>
+            <a routerLink="/bandas" (click)="closeDropdowns()" class="block px-4 py-2 hover:bg-gray-200">Bandas</a>
+          </li>
         </ul>
       </div>
       <a routerLink="/listar-convocatorias" class="hover:underline">Convocatorias</a>
@@ -40,7 +42,9 @@
           <li>
             <a routerLink="/listar-seguidos" (click)="closeDropdowns()" class="block px-4 py-2 hover:bg-gray-200">Perfiles</a>
           </li>
-          <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Bandas</li>
+          <li>
+            <a routerLink="/bandas-seguidas" (click)="closeDropdowns()" class="block px-4 py-2 hover:bg-gray-200">Bandas</a>
+          </li>
         </ul>
       </div>
       <!-- Crear -->
@@ -56,7 +60,9 @@
             <a routerLink="/crear-convocatoria" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-200">Convocatoria</a>
           </li>
           <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Publicacion</li>
-          <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Banda</li>
+          <li>
+            <a routerLink="/crear-banda" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-200">Banda</a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -82,7 +88,7 @@
       </button>
       <ul *ngIf="showExplorar" class="ml-4 mt-1 space-y-1">
         <li class="hover:underline"><a routerLink="/listar-perfiles" (click)="closeMenu()">Perfiles</a></li>
-        <li class="hover:underline"><a href="#">Bandas</a></li>
+        <li class="hover:underline"><a routerLink="/bandas" (click)="closeMenu()">Bandas</a></li>
       </ul>
     </div>
 
@@ -97,7 +103,7 @@
       </button>
       <ul *ngIf="showSeguimientos" class="ml-4 mt-1 space-y-1">
         <li class="hover:underline"><a routerLink="/listar-seguidos" (click)="closeMenu()">Perfiles</a></li>
-        <li class="hover:underline cursor-pointer"><a href="#" (click)="closeMenu()">Bandas</a></li>
+        <li class="hover:underline cursor-pointer"><a routerLink="/bandas-seguidas" (click)="closeMenu()">Bandas</a></li>
       </ul>
     </div>
     <a href="#" (click)="closeMenu()" class="block py-2">Artistas</a>
@@ -112,7 +118,7 @@
         <li><a routerLink="/crear-colaboracion" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Colaboración</a></li>
         <li><a routerLink="/crear-convocatoria" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Convocatoria</a></li>
         <li><a href="#" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Publicación</a></li>
-        <li><a href="#" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Banda</a></li>
+        <li><a routerLink="/crear-banda" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Banda</a></li>
       </ul>
     </div>
 

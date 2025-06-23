@@ -1,0 +1,31 @@
+<div class="container mx-auto px-4 py-6 font-bree">
+    <h1 class="text-4xl mb-6">Bandas seguidas por ti:</h1>
+
+    <ng-container *ngIf="bandasSeguidas.length; else sinBandas">
+        <div *ngFor="let band of bandasSeguidas" class="bg-gray-100 rounded-lg p-6 mb-8 flex flex-col sm:flex-row gap-4 shadow">
+            <!-- Avatar y nombre -->
+            <div class="flex flex-col items-center w-full sm:w-40">
+                <img src="/Banda.png" alt="Avatar banda" class="w-24 h-24 object-cover rounded" />
+                <button
+                    class="mt-4 text-lg underline hover:text-blue-700 focus:outline-none"
+                    (click)="verBanda(band)"
+                    [attr.aria-label]="'Ver banda ' + band.nombre">
+                    {{ band.nombre }}
+                </button>
+            </div>
+
+            <!-- Descripción y géneros -->
+            <div class="flex-1">
+                <h2 class="text-xl mb-2">Descripción:</h2>
+                <p class="leading-relaxed whitespace-pre-line">
+                    {{ band.descripcion || '—' }}
+                </p>
+                <p class="mt-2"><span class="font-bold">Géneros:</span> {{ band.generosMusicales.join(', ') }}</p>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #sinBandas>
+        <p>No sigues ninguna banda.</p>
+    </ng-template>
+</div> 
