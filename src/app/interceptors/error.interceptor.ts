@@ -8,8 +8,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 401) {
-        localStorage.removeItem('token');
-        router.navigate(['/register']);
+        const url = req.url;
+        if (url.includes('/auth/') || url.includes('/login') || url.includes('/register')) {
+          localStorage.removeItem('token');
+          router.navigate(['/register']);
+        }
       }
       return throwError(() => err);
     })

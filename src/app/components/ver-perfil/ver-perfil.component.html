@@ -16,10 +16,18 @@
             </button>
         </div>
         <ng-template #iconoSeguir>
-            <div class="flex gap-6 mt-4">
-                <button (click)="seguirUsuario()" aria-label="Seguir usuario">
-                    <img src="/Follow.png" alt="Seguir" class="w-10 h-10 hover:scale-110 transition-transform" />
-                </button>
+            <div class="flex flex-col items-center gap-2 mt-4">
+                <div class="flex items-center gap-4">
+                    <button (click)="seguirUsuario()" aria-label="Seguir usuario">
+                        <img src="/Follow.png" alt="Seguir" class="w-10 h-10 hover:scale-110 transition-transform" />
+                    </button>
+                    <span *ngIf="mensajeSeguimiento()" 
+                          [class]="tipoMensaje() === 'success' 
+                                   ? 'text-sm text-green-600 font-medium px-3 py-1 bg-green-100 rounded-md' 
+                                   : 'text-sm text-red-600 font-medium px-3 py-1 bg-red-100 rounded-md'">
+                        {{ mensajeSeguimiento() }}
+                    </span>
+                </div>
             </div>
         </ng-template>
 
