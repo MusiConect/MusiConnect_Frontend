@@ -1,10 +1,10 @@
 <header class="bg-pinkfigma text-black px-6 py-4 shadow-md sticky top-0 z-50 font-bree">
   <div class="flex justify-between items-center">
     <!-- Logo -->
-    <div class="flex items-center gap-2">
-      <img src="/Logo.png" alt="logo" class="w-10 h-10" />
+    <a routerLink="/home" class="flex items-center gap-2" aria-label="Página principal">
+      <img src="/Logo.png" alt="logo MusiConnect" class="w-10 h-10" />
       <span class="text-xl font-poppins font-bold">MusiConnect</span>
-    </div>
+    </a>
 
     <!-- Botón hamburguesa -->
     <button class="lg:hidden" (click)="toggleMenu()">
