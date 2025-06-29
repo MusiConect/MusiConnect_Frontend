@@ -1,6 +1,12 @@
 <div class="max-w-4xl mx-auto px-6 py-8 font-bree">
   <div class="flex justify-between items-center mb-8">
     <h1 class="text-3xl font-black">Publicaciones</h1>
+    <a
+      routerLink="/crear-publicacion"
+      class="bg-[#000784] text-white font-bree px-4 py-2 rounded-[15px] hover:bg-[#0005a0] transition-colors"
+    >
+      Crear publicación
+    </a>
   </div>
 
   <!-- Mensaje de operación -->
@@ -29,6 +35,24 @@
     </button>
   </div>
 
+  <!-- Filtro por fecha -->
+  <div class="mb-6 flex items-center gap-3">
+    <label for="fechaFiltro" class="font-bree">Filtrar desde:</label>
+    <input
+      id="fechaFiltro"
+      type="date"
+      [(ngModel)]="fechaFiltro"
+      class="border border-gray-400 px-2 py-1 rounded"
+    />
+    <button
+      *ngIf="fechaFiltro"
+      (click)="clearFilter()"
+      class="text-blue-600 hover:underline"
+    >
+      Limpiar
+    </button>
+  </div>
+
   <!-- Lista de publicaciones -->
   <div *ngIf="!cargando && !error" class="space-y-6">
     <div *ngIf="publicaciones.length === 0" class="text-center py-12">
@@ -36,7 +60,7 @@
     </div>
 
     <div
-      *ngFor="let publicacion of publicaciones"
+      *ngFor="let publicacion of publicacionesPagina"
       class="bg-white rounded-lg shadow-lg p-6 border-2 border-black"
     >
       <!-- Header de la publicación -->
@@ -93,5 +117,33 @@
         <app-listar-comentarios [postId]="publicacion.postId" (comentariosChanged)="actualizarConteoComentarios(publicacion, $event)"></app-listar-comentarios>
       </div>
     </div>
+  </div>
+
+  <!-- Controles de paginación -->
+  <div *ngIf="totalPaginas > 1 && !cargando && !error" class="flex justify-center mt-8 items-center gap-2 font-bree">
+    <button
+      (click)="paginaAnterior()"
+      [disabled]="currentPage === 1"
+      class="px-3 py-1 rounded hover:bg-gray-200 disabled:text-gray-400"
+    >
+      ‹
+    </button>
+
+    <button
+      *ngFor="let p of paginas"
+      (click)="irAPagina(p)"
+      class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-200"
+      [ngClass]="currentPage === p ? 'bg-[#000784] text-white' : 'text-[#000784]'"
+    >
+      {{ p }}
+    </button>
+
+    <button
+      (click)="paginaSiguiente()"
+      [disabled]="currentPage === totalPaginas"
+      class="px-3 py-1 rounded hover:bg-gray-200 disabled:text-gray-400"
+    >
+      ›
+    </button>
   </div>
 </div> 
