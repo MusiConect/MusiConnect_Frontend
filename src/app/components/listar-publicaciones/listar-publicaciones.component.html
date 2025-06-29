@@ -3,6 +3,15 @@
     <h1 class="text-3xl font-black">Publicaciones</h1>
   </div>
 
+  <!-- Mensaje de operación -->
+  <div *ngIf="mensajeAccion" class="mb-4 flex justify-center">
+    <span [class]="tipoMensaje === 'success' 
+                        ? 'text-sm text-green-600 font-medium px-3 py-1 bg-green-100 rounded-md' 
+                        : 'text-sm text-red-600 font-medium px-3 py-1 bg-red-100 rounded-md'">
+      {{ mensajeAccion }}
+    </span>
+  </div>
+
   <!-- Estado de carga -->
   <div *ngIf="cargando" class="text-center py-12">
     <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#FF00FF]"></div>
