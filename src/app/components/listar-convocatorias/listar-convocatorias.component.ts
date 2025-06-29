@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ConvocationResponse } from '../../models/convocation.model';
 import { ConvocationService } from '../../services/convocation.service';
@@ -15,7 +16,7 @@ interface CardConvocation extends ConvocationResponse {
 @Component({
     selector: 'app-listar-convocatorias',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, RouterModule],
     templateUrl: './listar-convocatorias.component.html',
     styleUrl: './listar-convocatorias.component.css'
 })
@@ -28,6 +29,10 @@ export class ListarConvocatoriasComponent implements OnInit {
     private favoritasIds: Set<number> = new Set();
     private nombreUsuario: string | null = null;
     private activasIds: Set<number> = new Set();
+
+    /** Paginación */
+    readonly CONVOCATORIAS_POR_PAGINA = 9;
+    currentPage: number = 1;
 
     constructor(
         private convocationService: ConvocationService,
@@ -43,6 +48,8 @@ export class ListarConvocatoriasComponent implements OnInit {
     /** Carga según filtro actual */
     cargarDatos(): void {
         this.cargando = true;
+        // Reiniciar página al cargar nuevos datos
+        this.currentPage = 1;
         const userId = this.session.getUserId() ?? 0;
 
         if (this.filtro === 'FAVORITAS') {
@@ -58,13 +65,14 @@ export class ListarConvocatoriasComponent implements OnInit {
                             expirada,
                             activa: !expirada
                         };
-                    });
+                    }).sort((a, b) => b.convocationId - a.convocationId);
                     // remover favoritas expiradas
                     this.convocatorias.filter(conv => conv.expirada && conv.esFavorita).forEach(conv => {
                         this.convocationService.eliminarDeFavoritas({usuarioId: userId, convocatoriaId: conv.convocationId}).subscribe();
                         conv.esFavorita = false;
                     });
                     this.cargando = false;
+                    this.currentPage = 1;
                 },
                 error: () => {
                     // Sin favoritas: limpiar lista
@@ -93,8 +101,9 @@ export class ListarConvocatoriasComponent implements OnInit {
                                 expirada,
                                 activa: !expirada
                             };
-                        });
+                        }).sort((a, b) => b.convocationId - a.convocationId);
                         this.cargando = false;
+                        this.currentPage = 1;
                     },
                     error: () => {
                         // Sin favoritas
@@ -107,8 +116,9 @@ export class ListarConvocatoriasComponent implements OnInit {
                                 expirada,
                                 activa: !expirada
                             };
-                        });
+                        }).sort((a, b) => b.convocationId - a.convocationId);
                         this.cargando = false;
+                        this.currentPage = 1;
                     }
                 });
             },
@@ -175,5 +185,40 @@ export class ListarConvocatoriasComponent implements OnInit {
             ? new Date(fechaLimite)
             : new Date(`${fechaLimite}T23:59:59`);
         return limite.getTime() < Date.now();
+    }
+
+    /* -------------------- paginación -------------------- */
+    /** Número total de páginas */
+    get totalPaginas(): number {
+        return Math.max(1, Math.ceil(this.convocatorias.length / this.CONVOCATORIAS_POR_PAGINA));
+    }
+
+    /** Array auxiliar para la plantilla */
+    get paginas(): number[] {
+        return Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+    }
+
+    /** Subconjunto de convocatorias para la página actual */
+    get convocatoriasPagina(): CardConvocation[] {
+        const inicio = (this.currentPage - 1) * this.CONVOCATORIAS_POR_PAGINA;
+        return this.convocatorias.slice(inicio, inicio + this.CONVOCATORIAS_POR_PAGINA);
+    }
+
+    irAPagina(p: number): void {
+        if (p >= 1 && p <= this.totalPaginas) {
+            this.currentPage = p;
+        }
+    }
+
+    paginaAnterior(): void {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+        }
+    }
+
+    paginaSiguiente(): void {
+        if (this.currentPage < this.totalPaginas) {
+            this.currentPage++;
+        }
     }
 } 

@@ -47,7 +47,11 @@ export class ListarPublicacionesComponent implements OnInit {
 
     this.postService.listarPosts().subscribe({
       next: (response) => {
-        this.publicaciones = response || [];
+        this.publicaciones = (response || []).sort((a, b) => {
+          const fA = new Date(a.fechaPublicacion).getTime();
+          const fB = new Date(b.fechaPublicacion).getTime();
+          return fB - fA; // descendente: más reciente primero
+        });
         this.cargando = false;
       },
       error: () => {
