@@ -30,7 +30,7 @@
       <div class="text-center">
         <button
           type="submit"
-          class="bg-[#FF00FF] text-white text-xl font-bold px-8 py-3 rounded-xl hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          class="bg-[#FF00FF] text-white text-xl font-bold px-8 py-3 rounded-xl hover:bg-pink-600 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
           [disabled]="form.invalid || contenido.length > 500 || cargando"
         >
           <span *ngIf="!cargando">Publicar 📨</span>

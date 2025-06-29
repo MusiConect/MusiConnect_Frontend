@@ -63,7 +63,7 @@
         <button
             (click)="paginaAnterior()"
             [disabled]="currentPage === 1"
-            class="px-3 py-1 rounded hover:bg-gray-200 disabled:text-gray-400"
+            class="px-3 py-1 rounded hover:bg-gray-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
             ‹
         </button>
@@ -80,7 +80,7 @@
         <button
             (click)="paginaSiguiente()"
             [disabled]="currentPage === totalPaginas"
-            class="px-3 py-1 rounded hover:bg-gray-200 disabled:text-gray-400"
+            class="px-3 py-1 rounded hover:bg-gray-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
             ›
         </button>
