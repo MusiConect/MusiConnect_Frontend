@@ -33,7 +33,15 @@
             <!-- Campo país -->
             <div class="form-control">
                 <label i18n for="country" class="font-bree">País</label>
-                <input id="country" type="text" formControlName="country" placeholder="Ej. Perú" class="w-full border border-black py-2 px-4 font-bree" />
+                <select
+                    id="country"
+                    formControlName="country"
+                    class="w-full border border-black py-2 px-4 font-bree bg-white"
+                    aria-label="Selector de país"
+                >
+                    <option value="" disabled selected i18n>Seleccione un país</option>
+                    <option *ngFor="let pais of paises" [value]="pais">{{ pais }}</option>
+                </select>
             </div>
 
             <!-- Selector de rol -->
