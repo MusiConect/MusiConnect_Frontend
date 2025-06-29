@@ -4,6 +4,15 @@
         <!-- Título -->
         <h1 class="text-4xl font-black">Editar Convocatoria</h1>
 
+        <!-- Mensaje de operación genérico -->
+        <div *ngIf="mensajeAccion" class="mb-4 flex justify-center">
+            <span [class]="tipoMensaje === 'success' 
+                                 ? 'text-sm text-green-600 font-medium px-3 py-1 bg-green-100 rounded-md' 
+                                 : 'text-sm text-red-600 font-medium px-3 py-1 bg-red-100 rounded-md'">
+                {{ mensajeAccion }}
+            </span>
+        </div>
+
         <!-- Mensaje éxito -->
         <div *ngIf="mensaje" class="bg-pinkfigma rounded-xl p-4 px-6 mb-8 flex items-center w-full md:w-[500px]">
             <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center mr-4">

@@ -19,6 +19,9 @@ export class ListarPublicacionesComponent implements OnInit {
   cargando: boolean = true;
   error: string = '';
   expandedPostId: number | null = null;
+  /* ------------------  mensajes ------------------ */
+  mensajeAccion = '';
+  tipoMensaje: 'success' | 'error' = 'success';
 
   constructor(
     private postService: PostService,
@@ -84,11 +87,15 @@ export class ListarPublicacionesComponent implements OnInit {
 
     this.postService.eliminarPost(postId, usuarioId).subscribe({
       next: () => {
-        // Eliminamos la publicación del arreglo sin recargar la página completa
         this.publicaciones = this.publicaciones.filter(p => p.postId !== postId);
+        this.tipoMensaje = 'success';
+        this.mensajeAccion = 'Publicación eliminada correctamente.';
+        setTimeout(() => (this.mensajeAccion = ''), 3000);
       },
       error: () => {
-        alert('Error al eliminar la publicación.');
+        this.tipoMensaje = 'error';
+        this.mensajeAccion = 'Error al eliminar la publicación.';
+        setTimeout(() => (this.mensajeAccion = ''), 3000);
       }
     });
   }

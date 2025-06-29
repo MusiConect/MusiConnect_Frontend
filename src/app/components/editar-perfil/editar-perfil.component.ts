@@ -62,6 +62,10 @@ export class EditarPerfilComponent implements OnInit {
     /* -------------------- internos -------------------- */
     private userId: number | null = null;
 
+    /* ------------------ mensajes ------------------ */
+    mensajeAccion = '';
+    tipoMensaje: 'success' | 'error' = 'success';
+
     constructor(
         private readonly userSrv: UserService,
         private readonly sessionSrv: SessionService,
@@ -128,8 +132,16 @@ export class EditarPerfilComponent implements OnInit {
         };
 
         this.userSrv.updateUser(this.userId, body).subscribe({
-            next: () => alert('✅ Perfil actualizado correctamente.'),
-            error: (e) => alert(e.error?.message ?? '❌ Error al actualizar perfil.')
+            next: () => {
+                this.tipoMensaje = 'success';
+                this.mensajeAccion = 'Perfil actualizado correctamente ✅';
+                setTimeout(() => (this.mensajeAccion = ''), 3000);
+            },
+            error: (e) => {
+                this.tipoMensaje = 'error';
+                this.mensajeAccion = e.error?.message ?? 'Error al actualizar perfil ❌';
+                setTimeout(() => (this.mensajeAccion = ''), 3000);
+            }
         });
     }
 } 

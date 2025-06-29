@@ -27,6 +27,10 @@ export class EditarColaboracionComponent implements OnInit {
 
   mostrarMensajeExito = false;
 
+  /* mensajes */
+  mensajeAccion = '';
+  tipoMensaje: 'success' | 'error' = 'success';
+
   /** IDs */
   private id!: number;
   private currentUserId: number | null = null;
@@ -55,7 +59,9 @@ export class EditarColaboracionComponent implements OnInit {
                             (this.currentUserId !== null && data.usuarioId === this.currentUserId);
 
       if (!esPropietario) {
-        alert('No tiene permisos para editar esta colaboración.');
+        this.tipoMensaje = 'error';
+        this.mensajeAccion = 'No tiene permisos para editar esta colaboración.';
+        setTimeout(() => (this.mensajeAccion = ''), 3000);
         this.router.navigate(['/listar-colaboraciones']);
         return;
       }
@@ -84,8 +90,16 @@ export class EditarColaboracionComponent implements OnInit {
     };
 
     this.collabSrv.update(this.id, body).subscribe({
-      next: () => this.mostrarMensajeExito = true,
-      error: err => alert(err.error?.message ?? 'Error al actualizar')
+      next: () => {
+        this.tipoMensaje = 'success';
+        this.mensajeAccion = 'Colaboración actualizada correctamente';
+        setTimeout(() => (this.mensajeAccion = ''), 3000);
+      },
+      error: err => {
+        this.tipoMensaje = 'error';
+        this.mensajeAccion = err.error?.message ?? 'Error al actualizar';
+        setTimeout(() => (this.mensajeAccion = ''), 3000);
+      }
     });
   }
 
@@ -94,10 +108,16 @@ export class EditarColaboracionComponent implements OnInit {
     if (!this.collaborator.trim()) return;
     this.collabSrv.addMember(this.id, this.collaborator.trim()).subscribe({
       next: () => {
-        alert('Colaborador añadido ✅');
+        this.tipoMensaje = 'success';
+        this.mensajeAccion = 'Colaborador añadido ✅';
+        setTimeout(() => (this.mensajeAccion = ''), 3000);
         this.collaborator = '';
       },
-      error: err => alert(err.error?.message ?? 'No se pudo añadir')
+      error: err => {
+        this.tipoMensaje = 'error';
+        this.mensajeAccion = err.error?.message ?? 'No se pudo añadir';
+        setTimeout(() => (this.mensajeAccion = ''), 3000);
+      }
     });
   }
 
@@ -109,13 +129,19 @@ export class EditarColaboracionComponent implements OnInit {
     if (!confirm('¿Eliminar esta colaboración?')) return;
 
     if (this.currentUserId === null) {
-      alert('Sesión inválida');
+      this.tipoMensaje = 'error';
+      this.mensajeAccion = 'Sesión inválida';
+      setTimeout(() => (this.mensajeAccion = ''), 3000);
       return;
     }
 
     this.collabSrv.delete(this.id, this.currentUserId).subscribe({
       next: () => this.router.navigate(['/crear-colaboracion']),
-      error: err => alert(err.error?.message ?? 'Error al eliminar')
+      error: err => {
+        this.tipoMensaje = 'error';
+        this.mensajeAccion = err.error?.message ?? 'Error al eliminar';
+        setTimeout(() => (this.mensajeAccion = ''), 3000);
+      }
     });
   }
 }
