@@ -18,6 +18,12 @@ export class VerPerfilComponent implements OnInit {
     /** Datos del perfil cargado */
     usuario = signal<User | null>(null);
 
+    /** Mensaje de seguimiento */
+    mensajeSeguimiento = signal<string>('');
+
+    /** Tipo de mensaje: 'success' o 'error' */
+    tipoMensaje = signal<'success' | 'error'>('success');
+
     /** ¿El visitante está viendo su propio perfil? */
     readonly esPropio = computed(() => {
         const idActual = this.session.getUserId();
@@ -43,7 +49,14 @@ export class VerPerfilComponent implements OnInit {
 
         this.userService.getById(id).subscribe({
             next: (u) => this.usuario.set(u),
-            error: () => this.router.navigate(['/home'])
+            error: (err) => {
+                console.error('Error al cargar perfil:', err);
+                // Solo redirigir si es un error 404 (usuario no encontrado)
+                // No redirigir en caso de 401 para evitar loops
+                if (err.status === 404) {
+                    this.router.navigate(['/home']);
+                }
+            }
         });
     }
 
@@ -70,7 +83,10 @@ export class VerPerfilComponent implements OnInit {
 
         this.followSvc.crearFollow(followPayload).subscribe({
             next: (res) => {
-                window.alert(res.message);
+                this.tipoMensaje.set('success');
+                this.mensajeSeguimiento.set(`Ahora sigues a ${seguido.nombreArtistico || 'este usuario'}`);
+                // Limpiar el mensaje después de 3 segundos
+                setTimeout(() => this.mensajeSeguimiento.set(''), 3000);
             },
             error: (err) => {
                 const mensaje = err?.error?.error as string | undefined;
@@ -81,14 +97,25 @@ export class VerPerfilComponent implements OnInit {
                         followedUserId: seguido.userId
                     };
                     this.followSvc.eliminarFollow(unfollowPayload).subscribe({
-                        next: (res) => window.alert(res.message),
+                        next: (res) => {
+                            this.tipoMensaje.set('error');
+                            this.mensajeSeguimiento.set(`Ya no sigues a ${seguido.nombreArtistico || 'este usuario'}`);
+                            // Limpiar el mensaje después de 3 segundos
+                            setTimeout(() => this.mensajeSeguimiento.set(''), 3000);
+                        },
                         error: (e2) => {
                             const msg2 = e2?.error?.error ?? 'Error al dejar de seguir.';
-                            window.alert(msg2);
+                            this.tipoMensaje.set('error');
+                            this.mensajeSeguimiento.set(msg2);
+                            // Limpiar el mensaje después de 3 segundos
+                            setTimeout(() => this.mensajeSeguimiento.set(''), 3000);
                         }
                     });
                 } else {
-                    window.alert(mensaje ?? 'Error al seguir usuario.');
+                    this.tipoMensaje.set('error');
+                    this.mensajeSeguimiento.set(mensaje ?? 'Error al seguir usuario.');
+                    // Limpiar el mensaje después de 3 segundos
+                    setTimeout(() => this.mensajeSeguimiento.set(''), 3000);
                 }
             }
         });
