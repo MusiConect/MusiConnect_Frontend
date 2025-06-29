@@ -28,7 +28,7 @@
     <div class="flex justify-end">
       <button
         type="submit"
-        class="bg-[#FF00FF] text-white text-sm font-bold px-6 py-2 rounded-lg hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        class="bg-[#FF00FF] text-white text-sm font-bold px-6 py-2 rounded-lg hover:bg-pink-600 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
         [disabled]="form.invalid || contenido.length > 300 || cargando"
       >
         <span *ngIf="!cargando">Comentar 💬</span>
