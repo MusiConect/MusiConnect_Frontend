@@ -30,6 +30,11 @@ export class ListarBandasComponent implements OnInit {
   /** Set de IDs de bandas seguidas por el usuario */
   followedBandIds = new Set<number>();
 
+  /* ------------------ mensajes ------------------ */
+  mensajeAccion = '';
+  tipoMensaje: 'success' | 'error' = 'success';
+  accionBandId: number | null = null;
+
   constructor(
     private fb: FormBuilder,
     private bandService: BandService,
@@ -85,7 +90,10 @@ export class ListarBandasComponent implements OnInit {
   toggleFollow(band: BandResponse): void {
     const userId = this.sessionService.getUserId();
     if (!userId) {
-      alert('Debe iniciar sesión.');
+      this.tipoMensaje = 'error';
+      this.mensajeAccion = 'Debe iniciar sesión.';
+      this.accionBandId = band.bandId;
+      setTimeout(() => (this.mensajeAccion = ''), 3000);
       return;
     }
 
@@ -93,15 +101,37 @@ export class ListarBandasComponent implements OnInit {
       // Unfollow
       const payload: UnfollowRequest = { followerId: userId, followedBandId: band.bandId };
       this.followService.eliminarFollow(payload).subscribe({
-        next: () => this.followedBandIds.delete(band.bandId),
-        error: () => alert('Error al dejar de seguir la banda.')
+        next: () => {
+          this.followedBandIds.delete(band.bandId);
+          this.tipoMensaje = 'error';
+          this.mensajeAccion = `Has dejado de seguir a ${band.nombre}.`;
+          this.accionBandId = band.bandId;
+          setTimeout(() => (this.mensajeAccion = ''), 3000);
+        },
+        error: () => {
+          this.tipoMensaje = 'error';
+          this.mensajeAccion = 'Error al dejar de seguir la banda.';
+          this.accionBandId = band.bandId;
+          setTimeout(() => (this.mensajeAccion = ''), 3000);
+        }
       });
     } else {
       // Follow
       const payload: FollowCreate = { followerId: userId, followedBandId: band.bandId };
       this.followService.crearFollow(payload).subscribe({
-        next: () => this.followedBandIds.add(band.bandId),
-        error: () => alert('Error al seguir la banda.')
+        next: () => {
+          this.followedBandIds.add(band.bandId);
+          this.tipoMensaje = 'success';
+          this.mensajeAccion = `Ahora sigues a ${band.nombre}.`;
+          this.accionBandId = band.bandId;
+          setTimeout(() => (this.mensajeAccion = ''), 3000);
+        },
+        error: () => {
+          this.tipoMensaje = 'error';
+          this.mensajeAccion = 'Error al seguir la banda.';
+          this.accionBandId = band.bandId;
+          setTimeout(() => (this.mensajeAccion = ''), 3000);
+        }
       });
     }
   }
@@ -139,7 +169,10 @@ export class ListarBandasComponent implements OnInit {
   deleteBand(bandId: number): void {
     const adminId = this.sessionService.getUserId();
     if (!adminId) {
-      alert('Error de autenticación.');
+      this.tipoMensaje = 'error';
+      this.mensajeAccion = 'Error de autenticación.';
+      this.accionBandId = null;
+      setTimeout(() => (this.mensajeAccion = ''), 3000);
       return;
     }
 
@@ -149,7 +182,10 @@ export class ListarBandasComponent implements OnInit {
           this.myBands = this.myBands.filter(band => band.bandId !== bandId);
         },
         error: (err) => {
-          alert(err.error?.message || 'Error al eliminar la banda.');
+          this.tipoMensaje = 'error';
+          this.mensajeAccion = err.error?.message || 'Error al eliminar la banda.';
+          this.accionBandId = bandId;
+          setTimeout(() => (this.mensajeAccion = ''), 3000);
         }
       });
     }

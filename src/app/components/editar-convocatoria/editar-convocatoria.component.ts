@@ -28,6 +28,10 @@ export class EditarConvocatoriaComponent implements OnInit {
     sinPropiedad: boolean = false;
     idConvocatoria!: number;
 
+    /* Mensaje de acción */
+    mensajeAccion = '';
+    tipoMensaje: 'success' | 'error' = 'success';
+
     constructor(
         private route: ActivatedRoute,
         private convocationService: ConvocationService,
@@ -104,7 +108,11 @@ export class EditarConvocatoriaComponent implements OnInit {
         const usuarioId = this.session.getUserId() ?? 0;
         this.convocationService.eliminarConvocatoria(this.idConvocatoria, usuarioId).subscribe({
             next: () => this.router.navigate(['/listar-convocatorias']),
-            error: () => alert('Error al eliminar convocatoria')
+            error: () => {
+                this.tipoMensaje = 'error';
+                this.mensajeAccion = 'Error al eliminar convocatoria.';
+                setTimeout(() => (this.mensajeAccion = ''), 3000);
+            }
         });
     }
 } 

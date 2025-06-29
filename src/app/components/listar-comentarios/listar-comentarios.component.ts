@@ -25,6 +25,10 @@ export class ListarComentariosComponent implements OnChanges {
     editandoComentarioId: number | null = null;
     nuevoContenido: string = '';
 
+    /* ------------------ mensajes ------------------ */
+    mensajeAccion = '';
+    tipoMensaje: 'success' | 'error' = 'success';
+
     constructor(
         private postService: PostService,
         public sessionService: SessionService,
@@ -77,7 +81,9 @@ export class ListarComentariosComponent implements OnChanges {
                 this.comentariosChanged.emit(this.comentarios.length);
             },
             error: () => {
-                alert('Error al eliminar el comentario.');
+                this.tipoMensaje = 'error';
+                this.mensajeAccion = 'Error al eliminar el comentario.';
+                setTimeout(() => (this.mensajeAccion = ''), 3000);
             }
         });
     }
@@ -104,7 +110,9 @@ export class ListarComentariosComponent implements OnChanges {
                 this.cargarComentarios();
             },
             error: () => {
-                alert('Error al editar el comentario.');
+                this.tipoMensaje = 'error';
+                this.mensajeAccion = 'Error al editar el comentario.';
+                setTimeout(() => (this.mensajeAccion = ''), 3000);
             }
         });
     }

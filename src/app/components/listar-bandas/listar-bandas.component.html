@@ -58,9 +58,17 @@
               <p class="text-sm font-bold">Administrador: <span class="font-normal">{{ band.administradorNombreArtistico }}</span></p>
               <p class="text-sm font-bold">Género: <span class="font-normal">{{ band.generosMusicales.join(', ') }}</span></p>
             </div>
-            <button (click)="toggleFollow(band)" aria-label="Seguir o dejar de seguir banda" class="ml-4 flex-shrink-0">
-              <img src="/Follow.png" alt="Icono seguir" width="50" height="50" />
-            </button>
+            <div class="flex flex-col items-center gap-1 ml-4">
+              <button (click)="toggleFollow(band)" aria-label="Seguir o dejar de seguir banda" class="flex-shrink-0">
+                <img src="/Follow.png" alt="Icono seguir" width="50" height="50" />
+              </button>
+              <span *ngIf="accionBandId === band.bandId && mensajeAccion"
+                    [class]="tipoMensaje === 'success' 
+                                 ? 'text-xs text-green-600 font-medium px-2 py-0.5 bg-green-100 rounded-md' 
+                                 : 'text-xs text-red-600 font-medium px-2 py-0.5 bg-red-100 rounded-md'">
+                {{ mensajeAccion }}
+              </span>
+            </div>
           </li>
         </ul>
       </div>

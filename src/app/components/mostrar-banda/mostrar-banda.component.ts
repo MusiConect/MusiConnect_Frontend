@@ -20,6 +20,12 @@ export class MostrarBandaComponent implements OnInit {
     banda = signal<BandResponse | null>(null);
     miembros = signal<string[]>([]);
 
+    /** Mensaje de seguimiento */
+    mensajeSeguimiento = signal<string>('');
+
+    /** Tipo de mensaje */
+    tipoMensaje = signal<'success' | 'error'>('success');
+
     /** El usuario autenticado es administrador de la banda */
     readonly esAdmin = computed(() => {
         const nombre = this.session.getNombreArtistico();
@@ -69,18 +75,32 @@ export class MostrarBandaComponent implements OnInit {
 
         const payload: FollowCreate = { followerId, followedBandId: band.bandId };
         this.followSvc.crearFollow(payload).subscribe({
-            next: (res) => window.alert(res.message),
+            next: (res) => {
+                this.tipoMensaje.set('success');
+                this.mensajeSeguimiento.set(res.message ?? 'Ahora sigues la banda.');
+                setTimeout(() => this.mensajeSeguimiento.set(''), 3000);
+            },
             error: (err) => {
                 const mensaje: string | undefined = err?.error?.error;
                 if (mensaje && mensaje.includes('Ya sigues')) {
                     // Unfollow
                     const unfollow: UnfollowRequest = { followerId, followedBandId: band.bandId };
                     this.followSvc.eliminarFollow(unfollow).subscribe({
-                        next: (r) => window.alert(r.message),
-                        error: () => window.alert('Error al dejar de seguir la banda.')
+                        next: (r) => {
+                            this.tipoMensaje.set('error');
+                            this.mensajeSeguimiento.set(r.message ?? 'Dejaste de seguir la banda.');
+                            setTimeout(() => this.mensajeSeguimiento.set(''), 3000);
+                        },
+                        error: () => {
+                            this.tipoMensaje.set('error');
+                            this.mensajeSeguimiento.set('Error al dejar de seguir la banda.');
+                            setTimeout(() => this.mensajeSeguimiento.set(''), 3000);
+                        }
                     });
                 } else {
-                    window.alert(mensaje ?? 'Error al seguir banda.');
+                    this.tipoMensaje.set('error');
+                    this.mensajeSeguimiento.set(mensaje ?? 'Error al seguir banda.');
+                    setTimeout(() => this.mensajeSeguimiento.set(''), 3000);
                 }
             }
         });

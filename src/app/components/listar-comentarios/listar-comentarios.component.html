@@ -9,6 +9,15 @@
     {{ error }}
   </div>
 
+  <!-- Mensaje de operación -->
+  <div *ngIf="mensajeAccion" class="text-center py-2">
+    <span [class]="tipoMensaje === 'success' 
+                        ? 'text-sm text-green-600 font-medium px-3 py-1 bg-green-100 rounded-md' 
+                        : 'text-sm text-red-600 font-medium px-3 py-1 bg-red-100 rounded-md'">
+      {{ mensajeAccion }}
+    </span>
+  </div>
+
   <!-- Lista comentarios -->
   <ul *ngIf="!cargando && !error" class="space-y-3">
     <li *ngFor="let c of comentarios" class="border-b pb-2 relative">

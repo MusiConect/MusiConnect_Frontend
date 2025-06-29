@@ -18,7 +18,7 @@ export const routes: Routes = [
   { path: 'crear-convocatoria', loadComponent: () => import('./components/crear-convocatoria/crear-convocatoria.component').then(m => m.CrearConvocatoriaComponent), canActivate: [authGuard] },
   { path: 'editar-convocatoria/:id', loadComponent: () => import('./components/editar-convocatoria/editar-convocatoria.component').then(m => m.EditarConvocatoriaComponent), canActivate: [authGuard] },
   { path: 'listar-convocatorias', loadComponent: () => import('./components/listar-convocatorias/listar-convocatorias.component').then(m => m.ListarConvocatoriasComponent), canActivate: [authGuard] },
-  { path: 'mostrar-convocatoria/:id', loadComponent: () => import('./components/mostrar-convocatoria/mostrar-convocatoria.component').then(m => m.MostrarConvocatoriaComponent) },
+  { path: 'mostrar-convocatoria/:id', loadComponent: () => import('./components/mostrar-convocatoria/mostrar-convocatoria.component').then(m => m.MostrarConvocatoriaComponent), canActivate: [authGuard] },
   { path: 'ver-perfil/:id', loadComponent: () => import('./components/ver-perfil/ver-perfil.component').then(m => m.VerPerfilComponent), canActivate: [authGuard] },
   { path: 'editar-perfil', loadComponent: () => import('./components/editar-perfil/editar-perfil.component').then(m => m.EditarPerfilComponent), canActivate: [authGuard] },
   { path: 'listar-perfiles', loadComponent: () => import('./components/listar-perfiles/listar-perfiles.component').then(m => m.ListarPerfilesComponent), canActivate: [authGuard] },
@@ -28,10 +28,10 @@ export const routes: Routes = [
   { path: 'invitar-miembro', loadComponent: () => import('./components/invitar-miembro/invitar-miembro.component').then(m => m.InvitarMiembroComponent), canActivate: [authGuard] },
   { path: 'editar-banda/:id', loadComponent: () => import('./components/editar-banda/editar-banda.component').then(m => m.EditarBandaComponent), canActivate: [authGuard] },
   { path: 'bandas', loadComponent: () => import('./components/listar-bandas/listar-bandas.component').then(m => m.ListarBandasComponent), canActivate: [authGuard] },
-  { path: 'mostrar-banda/:id', loadComponent: () => import('./components/mostrar-banda/mostrar-banda.component').then(m => m.MostrarBandaComponent) },
+  { path: 'mostrar-banda/:id', loadComponent: () => import('./components/mostrar-banda/mostrar-banda.component').then(m => m.MostrarBandaComponent), canActivate: [authGuard] },
   { path: 'crear-publicacion', loadComponent: () => import('./components/crear-publicacion/crear-publicacion.component').then(m => m.CrearPublicacionComponent), canActivate: [authGuard] },
   { path: 'editar-publicacion/:id', loadComponent: () => import('./components/editar-publicacion/editar-publicacion.component').then(m => m.EditarPublicacionComponent), canActivate: [authGuard] },
-  { path: 'publicaciones', loadComponent: () => import('./components/listar-publicaciones/listar-publicaciones.component').then(m => m.ListarPublicacionesComponent) },
+  { path: 'publicaciones', loadComponent: () => import('./components/listar-publicaciones/listar-publicaciones.component').then(m => m.ListarPublicacionesComponent), canActivate: [authGuard] },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];
