@@ -6,6 +6,7 @@ import { SessionService } from '../../services/session.service';
 import { NotificationService } from '../../services/notification.service';
 import { PostService } from '../../services/post.service';
 import { FormsModule, NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-colaboracion',
@@ -26,7 +27,8 @@ export class CrearColaboracionComponent {
     private collaborationService: CollaborationService,
     private session: SessionService,
     private readonly notifications: NotificationService,
-    private readonly postService: PostService
+    private readonly postService: PostService,
+    private readonly router: Router
   ) {}
 
   publicar(form: NgForm) {
@@ -66,9 +68,10 @@ export class CrearColaboracionComponent {
         form.resetForm(); // ✅ Esta línea reinicia todo el formulario visual y lógicamente
         this.fechasValidas = true;
 
-        // 🕒 Limpiar el mensaje después de 5 segundos
+        // 🕒 Después de 2 s, limpiamos el mensaje y redirigimos al listado de colaboraciones
         setTimeout(() => {
           this.mensaje = '';
+          this.router.navigate(['/listar-colaboraciones']);
         }, 2000);
       },
       error: (error) => {

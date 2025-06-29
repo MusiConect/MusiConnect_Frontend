@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { CollaborationService } from '../../services/collaboration.service';
 import { CollaborationUpdate } from '../../models/collaboration.model';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-listar-colaboraciones',
     standalone: true,
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, RouterModule],
     templateUrl: './listar-colaboraciones.component.html',
     styleUrl: './listar-colaboraciones.component.css'
 })
@@ -22,6 +23,10 @@ export class ListarColaboracionesComponent implements OnInit {
     /** Control para listar sólo activas */
     soloActivas: boolean = false;
 
+    /** Paginación */
+    readonly COLABS_POR_PAGINA = 12;
+    currentPage: number = 1;
+
     constructor(private collaborationSvc: CollaborationService, private router: Router) {}
 
     ngOnInit(): void {
@@ -31,9 +36,15 @@ export class ListarColaboracionesComponent implements OnInit {
     /** Carga colaboraciones según filtros actuales */
     private loadCollaborations(): void {
         if (this.soloActivas) {
-            this.collaborationSvc.getActive().subscribe(data => (this.collaborations = data));
+            this.collaborationSvc.getActive().subscribe(data => {
+                this.collaborations = data.sort((a, b) => (b as any).colaboracionId - (a as any).colaboracionId);
+                this.currentPage = 1;
+            });
         } else {
-            this.collaborationSvc.getAll().subscribe(data => (this.collaborations = data));
+            this.collaborationSvc.getAll().subscribe(data => {
+                this.collaborations = data.sort((a, b) => (b as any).colaboracionId - (a as any).colaboracionId);
+                this.currentPage = 1;
+            });
         }
     }
 
@@ -43,7 +54,10 @@ export class ListarColaboracionesComponent implements OnInit {
         if (term) {
             this.collaborationSvc
                 .getByNombreArtistico(term)
-                .subscribe(data => (this.collaborations = data));
+                .subscribe(data => {
+                    this.collaborations = data.sort((a, b) => (b as any).colaboracionId - (a as any).colaboracionId);
+                    this.currentPage = 1;
+                });
         } else {
             this.loadCollaborations();
         }
@@ -78,6 +92,38 @@ export class ListarColaboracionesComponent implements OnInit {
                 return 'bg-[#000784]';
             default:
                 return 'bg-gray-400';
+        }
+    }
+
+    /* -------------------- paginación -------------------- */
+    get totalPaginas(): number {
+        return Math.max(1, Math.ceil(this.collaborations.length / this.COLABS_POR_PAGINA));
+    }
+
+    get paginas(): number[] {
+        return Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+    }
+
+    get collaborationsPagina(): CollaborationUpdate[] {
+        const inicio = (this.currentPage - 1) * this.COLABS_POR_PAGINA;
+        return this.collaborations.slice(inicio, inicio + this.COLABS_POR_PAGINA);
+    }
+
+    irAPagina(p: number): void {
+        if (p >= 1 && p <= this.totalPaginas) {
+            this.currentPage = p;
+        }
+    }
+
+    paginaAnterior(): void {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+        }
+    }
+
+    paginaSiguiente(): void {
+        if (this.currentPage < this.totalPaginas) {
+            this.currentPage++;
         }
     }
 } 

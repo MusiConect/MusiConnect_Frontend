@@ -6,6 +6,7 @@ import { ConvocationService } from '../../services/convocation.service';
 import { SessionService } from '../../services/session.service';
 import { NotificationService } from '../../services/notification.service';
 import { PostService } from '../../services/post.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-crear-convocatoria',
@@ -27,7 +28,8 @@ export class CrearConvocatoriaComponent {
         private convocationService: ConvocationService,
         private session: SessionService,
         private readonly notifications: NotificationService,
-        private readonly postService: PostService
+        private readonly postService: PostService,
+        private readonly router: Router
     ) {}
 
     /** Envía la convocatoria al backend */
@@ -79,7 +81,10 @@ export class CrearConvocatoriaComponent {
                 this.fechaLimite = '';
                 form.resetForm();
 
-                setTimeout(() => (this.mensaje = ''), 2000);
+                setTimeout(() => {
+                    this.mensaje = '';
+                    this.router.navigate(['/listar-convocatorias']);
+                }, 2000);
             },
             error: (error) => {
                 this.mensaje = error.error?.message

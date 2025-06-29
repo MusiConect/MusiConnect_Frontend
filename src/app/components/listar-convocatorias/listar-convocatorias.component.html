@@ -1,6 +1,14 @@
 <div class="max-w-7xl mx-auto px-6 py-12 font-bree">
-    <!-- Título -->
-    <h1 class="text-4xl font-black mb-6">Convocatorias</h1>
+    <!-- Encabezado con botón "Crear convocatoria" -->
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-black">Convocatorias</h1>
+        <a
+            routerLink="/crear-convocatoria"
+            class="bg-[#000784] text-white font-bree px-4 py-2 rounded-[15px] hover:bg-[#0005a0] transition-colors"
+        >
+            Crear convocatoria
+        </a>
+    </div>
 
     <!-- Barra de acciones -->
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
@@ -23,7 +31,7 @@
 
     <!-- Grid de tarjetas -->
     <div *ngIf="!cargando && convocatorias.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        <div *ngFor="let c of convocatorias" class="w-[254px] h-[281px] bg-[#D9D9D9] p-4 relative">
+        <div *ngFor="let c of convocatoriasPagina" class="w-[254px] h-[281px] bg-[#D9D9D9] p-4 relative">
             <!-- Foto perfil -->
             <img src="/FotoPerfil.png" alt="Perfil" class="w-20 h-20 object-cover" />
             <!-- Icono favorita -->
@@ -48,6 +56,34 @@
     <!-- Imagen sin resultados -->
     <div *ngIf="!cargando && convocatorias.length === 0" class="flex justify-center mt-16">
         <img src="/NoMoreConvos.png" alt="No hay más convocatorias" class="w-64" />
+    </div>
+
+    <!-- Controles de paginación -->
+    <div *ngIf="totalPaginas > 1 && !cargando" class="flex justify-center mt-8 items-center gap-2 font-bree">
+        <button
+            (click)="paginaAnterior()"
+            [disabled]="currentPage === 1"
+            class="px-3 py-1 rounded hover:bg-gray-200 disabled:text-gray-400"
+        >
+            ‹
+        </button>
+
+        <button
+            *ngFor="let p of paginas"
+            (click)="irAPagina(p)"
+            class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-200"
+            [ngClass]="currentPage === p ? 'bg-[#000784] text-white' : 'text-[#000784]'"
+        >
+            {{ p }}
+        </button>
+
+        <button
+            (click)="paginaSiguiente()"
+            [disabled]="currentPage === totalPaginas"
+            class="px-3 py-1 rounded hover:bg-gray-200 disabled:text-gray-400"
+        >
+            ›
+        </button>
     </div>
 
     <div *ngIf="cargando" class="text-center text-lg mt-10">Cargando...</div>
