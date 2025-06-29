@@ -29,7 +29,7 @@
         <form [formGroup]="searchForm" (ngSubmit)="searchByName()">
           <div class="flex space-x-2">
             <input type="text" formControlName="bandName" class="flex-grow px-4 py-2 border-2 border-black rounded-lg" placeholder="Ingrese el nombre de la banda"/>
-            <button type="submit" [disabled]="searchForm.invalid" class="bg-[#FF8DFF] text-black font-bold px-6 py-2 rounded-lg hover:opacity-90 disabled:bg-gray-300">Buscar</button>
+            <button type="submit" [disabled]="searchForm.invalid" class="bg-[#FF8DFF] text-black font-bold px-6 py-2 rounded-lg hover:opacity-90 disabled:bg-gray-300 disabled:cursor-not-allowed">Buscar</button>
           </div>
         </form>
         
