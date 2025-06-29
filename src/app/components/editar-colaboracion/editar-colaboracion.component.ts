@@ -122,7 +122,7 @@ export class EditarColaboracionComponent implements OnInit {
   }
 
   cancelChanges() {
-    this.router.navigate(['/crear-colaboracion']);
+    this.router.navigate(['/listar-colaboraciones']);
   }
 
   deleteCollaboration() {

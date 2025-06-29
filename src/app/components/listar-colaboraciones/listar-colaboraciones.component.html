@@ -1,6 +1,14 @@
 <div class="p-8">
-    <!-- Título -->
-    <h1 class="text-4xl font-bold text-black">Colaboraciones</h1>
+    <!-- Encabezado con botón "Crear colaboración" -->
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-black">Colaboraciones</h1>
+        <a
+            routerLink="/crear-colaboracion"
+            class="bg-[#000784] text-white font-bree px-4 py-2 rounded-[15px] hover:bg-[#0005a0] transition-colors"
+        >
+            Crear colaboración
+        </a>
+    </div>
 
     <!-- Encabezado y barra de búsqueda -->
     <div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
@@ -32,7 +40,7 @@
 
     <!-- Tarjetas de colaboraciones -->
     <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        <ng-container *ngFor="let card of collaborations">
+        <ng-container *ngFor="let card of collaborationsPagina">
             <div class="card flex flex-col gap-3 rounded-lg border-2 border-gray-900 p-4">
                 <div class="flex items-center justify-between">
                     <h3 class="text-xl leading-tight font-[\'Bree Serif\']">{{ card.titulo }}</h3>
@@ -54,5 +62,20 @@
             <img src="NoMoreColabs.png" alt="Sin colaboraciones" class="w-52" />
             <p class="text-xl font-[\'Bree Serif\']">No hay colaboraciones actualmente</p>
         </div>
+    </div>
+
+    <!-- Controles de paginación -->
+    <div *ngIf="totalPaginas > 1" class="flex justify-center mt-8 items-center gap-2 font-bree">
+        <button (click)="paginaAnterior()" [disabled]="currentPage === 1" class="px-3 py-1 rounded hover:bg-gray-200 disabled:text-gray-400">
+            ‹
+        </button>
+
+        <button *ngFor="let p of paginas" (click)="irAPagina(p)" class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-200" [ngClass]="currentPage === p ? 'bg-[#000784] text-white' : 'text-[#000784]'">
+            {{ p }}
+        </button>
+
+        <button (click)="paginaSiguiente()" [disabled]="currentPage === totalPaginas" class="px-3 py-1 rounded hover:bg-gray-200 disabled:text-gray-400">
+            ›
+        </button>
     </div>
 </div> 
