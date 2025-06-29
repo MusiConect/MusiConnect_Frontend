@@ -38,7 +38,8 @@ export class LoginComponent {
                 this.session.setSession(res);
                 this.isError = false;
                 this.mensaje = res.mensaje;
-                setTimeout(() => this.router.navigate(['/crear-colaboracion']), 1000);
+                const id = res.userId;
+                setTimeout(() => this.router.navigate(['/ver-perfil', id]), 1000);
             },
             error: err => {
                 this.isError = true;
