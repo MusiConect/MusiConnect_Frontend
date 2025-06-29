@@ -31,18 +31,19 @@ export class ListarSeguidosComponent implements OnInit {
 
         this.followSvc.listarPerfilesSeguidos(userId).subscribe({
             next: (lista) => {
-                this.seguidos = lista;
-                // Enriquecer con biografía si es un usuario
-                lista.forEach((p) => {
-                    if (p.tipo === 'Usuario') {
-                        this.userSvc.getById(p.id).subscribe({
-                            next: (u) => {
-                                const target = this.seguidos.find(s => s.id === p.id);
-                                if (target) target.bio = u.bio || undefined;
-                            },
-                            error: () => {}
-                        });
-                    }
+                const perfiles = lista.filter(p => p.tipo === 'Usuario');
+
+                this.seguidos = perfiles;
+
+                // Enriquecer con biografía solo para usuarios (filtrados previamente)
+                perfiles.forEach((p) => {
+                    this.userSvc.getById(p.id).subscribe({
+                        next: (u) => {
+                            const target = this.seguidos.find(s => s.id === p.id);
+                            if (target) target.bio = u.bio || undefined;
+                        },
+                        error: () => {}
+                    });
                 });
             },
             error: (err) => console.error(err)
