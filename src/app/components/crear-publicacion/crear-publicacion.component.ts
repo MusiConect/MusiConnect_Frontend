@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { PostService } from '../../services/post.service';
 import { SessionService } from '../../services/session.service';
 import { PostCreate } from '../../models/post.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-publicacion',
@@ -19,7 +20,8 @@ export class CrearPublicacionComponent {
 
   constructor(
     private postService: PostService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private router: Router
   ) {}
 
   publicar() {
@@ -56,7 +58,10 @@ export class CrearPublicacionComponent {
         this.contenido = '';
         this.cargando = false;
 
-        setTimeout(() => (this.mensaje = ''), 3000);
+        // Redirigir a la lista de publicaciones tras 1 s
+        setTimeout(() => {
+          this.router.navigate(['/publicaciones']);
+        }, 1000);
       },
       error: (error) => {
         this.mensaje = error.error?.message
