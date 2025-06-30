@@ -102,8 +102,8 @@ export class CrearBandaComponent implements OnInit {
             this.successMessage = `¡Banda "${response.nombre}" creada exitosamente!`;
             
             // 1. Mostrar notificación en el header
-            const notifMsg = `Creación de tu banda puesta en publicaciones!`;
-            this.notifications.show(notifMsg);
+            const notifMsg = 'Creación de tu banda puesta en publicaciones!';
+            this.notifications.push(notifMsg, 'SUCCESS');
 
             // 2. Crear publicación automática
             const nombreUsuario = this.sessionService.getNombreArtistico() ?? 'Alguien';

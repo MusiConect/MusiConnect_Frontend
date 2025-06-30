@@ -51,7 +51,7 @@ export class CrearColaboracionComponent {
         this.mensaje = '✅ ¡Colaboración creada con éxito!';
 
         // Notificación y publicación
-        this.notifications.show('Creación de tu colaboración puesta en publicaciones!');
+        this.notifications.push('Creación de tu colaboración puesta en publicaciones!', 'SUCCESS');
 
         const nombreUsuario = this.session.getNombreArtistico() ?? 'Alguien';
         const colaboracionId = (res as any).colaboracionId ?? (res as any).id ?? 0;
