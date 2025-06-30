@@ -18,7 +18,14 @@
             </div>
 
             <!-- Botón -->
-            <button type="submit" class="login-btn mb-4" i18n>Ingresar</button>
+            <button
+                type="submit"
+                class="login-btn mb-4 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                [disabled]="loginForm.invalid"
+                i18n
+            >
+                Ingresar
+            </button>
 
             <!-- Mensaje -->
             <p *ngIf="mensaje" [ngClass]="isError ? 'text-red-600' : 'text-green-600'">{{ mensaje }}</p>

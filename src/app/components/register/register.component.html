@@ -71,7 +71,14 @@
             </fieldset>
 
             <!-- Botón registrar -->
-            <button type="submit" class="register-button mb-2" i18n>Registrar</button>
+            <button
+                type="submit"
+                class="register-button mb-2 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                [disabled]="registerForm.invalid"
+                i18n
+            >
+                Registrar
+            </button>
 
             <!-- Mensaje de backend -->
             <p *ngIf="mensaje" [ngClass]="isError ? 'text-red-600' : 'text-green-600'">{{ mensaje }}</p>

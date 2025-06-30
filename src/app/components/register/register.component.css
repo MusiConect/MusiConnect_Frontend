@@ -90,4 +90,10 @@
     border-radius: 20px;
     color: #FFFFFF;
     font-weight: 700;
+}
+
+/* Estado deshabilitado */
+.register-button:disabled {
+    background-color: #D1D5DB; /* gray-300 */
+    cursor: not-allowed;
 } 

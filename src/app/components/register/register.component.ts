@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { AuthService } from '../../services/auth.service';
 import { SessionService } from '../../services/session.service';
 import { Router, RouterModule } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 /**
  * Componente de registro de usuario tal como se muestra en el diseño Figma.
@@ -116,9 +117,15 @@ export class RegisterComponent {
                     const id = res.userId;
                     setTimeout(() => this.router.navigate(['/ver-perfil', id]), 1000);
                 },
-                error: (err) => {
+                error: (err: HttpErrorResponse) => {
                     this.isError = true;
-                    this.mensaje = err.error?.mensaje ?? 'Error inesperado.';
+                    if (err.error) {
+                        this.mensaje = err.error.error ?? err.error.mensaje ?? 'Error inesperado.';
+                    } else if (err.status === 0) {
+                        this.mensaje = 'No se pudo conectar con el servidor.';
+                    } else {
+                        this.mensaje = `Error inesperado (código ${err.status}).`;
+                    }
                     setTimeout(() => (this.mensaje = ''), 5000);
                 }
             });

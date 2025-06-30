@@ -49,7 +49,7 @@ export class CrearConvocatoriaComponent {
             next: (resp) => {
                 // Emitir notificación
                 this.mensaje = '✅ ¡Convocatoria publicada con éxito!';
-                this.notifications.show('Creación de tu convocatoria puesta en publicaciones!');
+                this.notifications.push('Creación de tu convocatoria puesta en publicaciones!', 'SUCCESS');
 
                 // Obtener ID de la nueva convocatoria
                 const bodyId = (resp.body as any)?.convocationId ?? (resp.body as any)?.convocatoriaId ?? (resp.body as any)?.id;

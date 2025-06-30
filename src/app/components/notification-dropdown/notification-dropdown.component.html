@@ -1,0 +1,27 @@
+<!-- Lista de notificaciones -->
+<div *ngIf="open" class="absolute right-0 mt-2 w-80 bg-white text-black border border-gray-300 rounded shadow-xl z-50 font-sans"
+     role="listbox" aria-label="Historial de notificaciones">
+    <div class="flex justify-between items-center px-4 py-2 border-b border-gray-200">
+        <span class="font-semibold">Notificaciones</span>
+        <button type="button" (click)="clearAll()" class="text-xs text-red-600 hover:underline" aria-label="Borrar todas">
+            Borrar todas
+        </button>
+    </div>
+
+    <ng-container *ngIf="(notifs$ | async) as notifs">
+        <div *ngIf="!notifs.length" class="p-4 text-center text-gray-500">Sin notificaciones</div>
+        <div class="max-h-60 overflow-y-auto">
+          <ul>
+            <li *ngFor="let n of notifs; trackBy: trackById" (mouseenter)="markAsRead(n.id)"
+                [ngClass]="{'bg-gray-100': !n.leida}" class="relative px-4 py-2 border-b border-gray-100 hover:bg-gray-50 cursor-pointer">
+                <div class="text-sm" [innerHTML]="n.mensaje"></div>
+                <div class="text-xs text-gray-400 mt-1">{{ n.fecha | date:'short' }}</div>
+                <button type="button" (click)="remove(n.id, $event)" aria-label="Eliminar"
+                        class="absolute right-2 top-1 w-5 h-5 flex items-center justify-center text-gray-400 hover:text-gray-600">
+                    &times;
+                </button>
+            </li>
+          </ul>
+        </div>
+    </ng-container>
+</div> 

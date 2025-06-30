@@ -34,7 +34,16 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         }
       }
 
-      notifications.show(mensaje);
+      // Lista de textos que no deben mostrarse al usuario como toast
+      const SKIPPED_MSGS = [
+        'Aún no sigues a ningún perfil.',
+        'No tienes convocatorias favoritas activas.',
+        'Ya sigues a este perfil.'
+      ];
+
+      if (!SKIPPED_MSGS.includes(mensaje)) {
+        notifications.show(mensaje);
+      }
 
       return throwError(() => err);
     })

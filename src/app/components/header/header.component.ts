@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, HostListener, OnDestroy } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
-import { HostListener } from '@angular/core';
 import { SessionService } from '../../services/session.service';
 import { NotificationService } from '../../services/notification.service';
-import { Subscription, timer } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { NotificationDropdownComponent } from '../notification-dropdown/notification-dropdown.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NotificationDropdownComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
@@ -46,42 +47,44 @@ export class HeaderComponent implements OnDestroy
     this.showSeguimientos = false;
   }
 
-
   @HostListener('document:click', ['$event'])
-  handleClickOutside(event: MouseEvent)
-    {
+  handleClickOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;
 
-    // Si el clic ocurre fuera de los botones de menú, cerramos
+    // Si el clic ocurre fuera de los elementos del header, cerramos menús
     if (!target.closest('nav') && !target.closest('header')) {
       this.closeDropdowns();
+      this.showNotificaciones = false;
     }
   }
 
   menuAbierto: boolean = false;
 
-  /** Mensaje de notificación actual (o null si no hay) */
-  mensajeNotificacion: string | null = null;
+  /** Controla la visibilidad del historial de notificaciones */
+  showNotificaciones = false;
 
-  /** Subscripción al flujo de notificaciones */
-  private notSub?: Subscription;
+  /** Conteo de no leídas para badge (observable) */
+  readonly unreadCount$: Observable<number>;
+
+  /** Toast efímero proveniente de errores */
+  toastMessage: string | null = null;
+
+  private subs = new Subscription();
 
   constructor(
     private router: Router,
     private readonly session: SessionService,
     private readonly notifications: NotificationService
   ) {
-    // Suscribimos inmediatamente a las notificaciones globales.
-    this.notSub = this.notifications.mensaje$.subscribe((msg) => {
-      if (msg) {
-        this.mensajeNotificacion = msg;
-        // Ocultamos automáticamente tras 3 s.
-        timer(3000).subscribe(() => {
-          this.mensajeNotificacion = null;
-          this.notifications.clear();
-        });
-      }
-    });
+    // Calculamos unreadCount de forma reactiva
+    this.unreadCount$ = this.notifications.list$.pipe(
+      map((list) => list.filter((n) => !n.leida).length)
+    );
+
+    // Subscripción al toast efímero
+    this.subs.add(
+      this.notifications.toast$.subscribe((msg) => (this.toastMessage = msg))
+    );
   }
 
   toggleMenu() {
@@ -112,7 +115,11 @@ export class HeaderComponent implements OnDestroy
     this.closeMenu();
   }
 
+  toggleNotifications(): void {
+    this.showNotificaciones = !this.showNotificaciones;
+  }
+
   ngOnDestroy(): void {
-    this.notSub?.unsubscribe();
+    this.subs.unsubscribe();
   }
 }
