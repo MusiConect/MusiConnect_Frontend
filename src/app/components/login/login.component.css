@@ -10,4 +10,10 @@
 .form-control{width:80%;margin-bottom:1rem;}
 .form-control input{width:497px;height:32px;border-radius:15px;}
 
-.login-btn{width:169px;height:60px;background:#BA07C3;border-radius:20px;color:#FFFFFF;font-weight:700;} 
+.login-btn{width:169px;height:60px;background:#BA07C3;border-radius:20px;color:#FFFFFF;font-weight:700;}
+
+/* Estado deshabilitado */
+.login-btn:disabled{
+    background:#D1D5DB; /* gray-300 */
+    cursor:not-allowed;
+} 

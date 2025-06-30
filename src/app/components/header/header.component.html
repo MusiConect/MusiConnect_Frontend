@@ -73,13 +73,18 @@
     <div class="hidden lg:flex items-center gap-4">
       <a href="#" (click)="goToMyProfile($event)" class="hover:underline hidden md:inline">Mi Perfil</a>
       <div class="relative">
-        <button aria-label="Notificaciones"><img src="/Notificaciones.png" alt="Notificaciones" /></button>
-        <!-- Pop-up de notificación -->
-        <div
-          *ngIf="mensajeNotificacion"
-          class="absolute right-0 mt-2 w-72 bg-white border border-gray-300 rounded shadow-lg p-3 text-sm text-black z-50"
-        >
-          {{ mensajeNotificacion }}
+        <button type="button" (click)="toggleNotifications()" aria-label="Notificaciones" class="relative">
+          <img src="/Notificaciones.png" alt="Notificaciones" />
+          <!-- Badge de contador -->
+          <span *ngIf="(unreadCount$ | async) as count" class="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full px-1"
+                [hidden]="count === 0">{{ count }}</span>
+        </button>
+
+        <!-- Cuadro flotante con el historial -->
+        <app-notification-dropdown [open]="showNotificaciones"></app-notification-dropdown>
+        <!-- Toast de errores -->
+        <div *ngIf="toastMessage" class="absolute right-0 mt-2 w-72 bg-red-50 border border-red-300 rounded shadow-lg p-3 text-sm text-red-800 z-50">
+          {{ toastMessage }}
         </div>
       </div>
       <div class="w-10 h-10 bg-gray-200 rounded-md overflow-hidden">
