@@ -6,11 +6,12 @@ import { NotificationService } from '../../services/notification.service';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NotificationDropdownComponent } from '../notification-dropdown/notification-dropdown.component';
+import { HasRoleDirective } from '../../directives/has-role.directive';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, NotificationDropdownComponent],
+  imports: [CommonModule, RouterModule, NotificationDropdownComponent, HasRoleDirective],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
@@ -101,6 +102,8 @@ export class HeaderComponent implements OnDestroy
    */
   logout(): void {
     localStorage.removeItem('token');
+    // Limpiamos historial de notificaciones al cerrar sesión para evitar que el próximo usuario las vea.
+    this.notifications.clearAll();
     this.closeMenu();
     this.router.navigate(['/home']);
   }

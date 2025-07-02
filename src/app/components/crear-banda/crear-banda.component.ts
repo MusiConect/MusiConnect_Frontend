@@ -9,11 +9,12 @@ import { finalize } from 'rxjs/operators';
 import { BandSidebarComponent } from '../band-sidebar/band-sidebar.component';
 import { NotificationService } from '../../services/notification.service';
 import { PostService } from '../../services/post.service';
+import { HasRoleDirective } from '../../directives/has-role.directive';
 
 @Component({
   selector: 'app-crear-banda',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, BandSidebarComponent],
+  imports: [CommonModule, ReactiveFormsModule, BandSidebarComponent, HasRoleDirective],
   templateUrl: './crear-banda.component.html',
   styleUrls: ['./crear-banda.component.css']
 })

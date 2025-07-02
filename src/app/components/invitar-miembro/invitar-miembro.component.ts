@@ -10,11 +10,12 @@ import { User } from '../../models/user.model';
 import { forkJoin, of, catchError } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { BandSidebarComponent } from '../band-sidebar/band-sidebar.component';
+import { HasRoleDirective } from '../../directives/has-role.directive';
 
 @Component({
   selector: 'app-invitar-miembro',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, BandSidebarComponent],
+  imports: [CommonModule, ReactiveFormsModule, BandSidebarComponent, HasRoleDirective],
   templateUrl: './invitar-miembro.component.html',
   styleUrls: ['./invitar-miembro.component.css']
 })

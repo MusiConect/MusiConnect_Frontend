@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'http://localhost:8081/api/v1'
+    apiUrl: 'https://musiconnect-api-1-0.onrender.com/api/v1'
 }; 

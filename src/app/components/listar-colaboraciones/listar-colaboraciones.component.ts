@@ -5,11 +5,12 @@ import { CollaborationService } from '../../services/collaboration.service';
 import { CollaborationUpdate } from '../../models/collaboration.model';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { HasRoleDirective } from '../../directives/has-role.directive';
 
 @Component({
     selector: 'app-listar-colaboraciones',
     standalone: true,
-    imports: [CommonModule, FormsModule, RouterModule],
+    imports: [CommonModule, FormsModule, RouterModule, HasRoleDirective],
     templateUrl: './listar-colaboraciones.component.html',
     styleUrl: './listar-colaboraciones.component.css'
 })
