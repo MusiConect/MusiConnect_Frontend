@@ -1,11 +1,11 @@
 <div class="flex h-screen bg-gray-100">
-  <app-band-sidebar></app-band-sidebar>
+  <app-band-sidebar *appHasRole="'PRODUCTOR'"></app-band-sidebar>
 
   <!-- Main Content -->
   <div class="flex-1 p-10 overflow-y-auto">
     <div class="max-w-4xl mx-auto">
-      <!-- Tus Bandas -->
-      <div class="bg-[#F1EFEF] border-2 border-black p-6 rounded-2xl shadow-2xl mb-8">
+      <!-- Tus Bandas (solo productor) -->
+      <div *appHasRole="'PRODUCTOR'" class="bg-[#F1EFEF] border-2 border-black p-6 rounded-2xl shadow-2xl mb-8">
         <h2 class="text-2xl font-bold mb-4">Tus Bandas</h2>
         <div *ngIf="isLoading" class="text-center">Cargando...</div>
         <div *ngIf="!isLoading && myBands.length === 0" class="text-center text-gray-500">No administras ninguna banda.</div>

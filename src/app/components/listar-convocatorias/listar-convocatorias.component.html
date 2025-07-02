@@ -2,7 +2,7 @@
     <!-- Encabezado con botón "Crear convocatoria" -->
     <div class="flex justify-between items-center mb-8">
         <h1 class="text-3xl font-black">Convocatorias</h1>
-        <a
+        <a *appHasRole="'PRODUCTOR'"
             routerLink="/crear-convocatoria"
             class="bg-[#000784] text-white font-bree px-4 py-2 rounded-[15px] hover:bg-[#0005a0] transition-colors"
         >

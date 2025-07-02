@@ -17,13 +17,13 @@
 
     <!-- Navegación desktop -->
     <nav class="hidden md:flex gap-6 text-lg font-bree">
-      <a href="#">Inicio</a>
-      <a href="#">Ecosistema</a>
-      <a href="#">Acerca de nosotros</a>
+      <a (click)="scrollTo('intro-section')" class="cursor-pointer">Inicio</a>
+      <a (click)="scrollTo('ecosistema-section')" class="cursor-pointer">Ecosistema</a>
+      <a (click)="scrollTo('acerca-section')" class="cursor-pointer">Acerca de nosotros</a>
     </nav>
 
     <!-- Botones desktop -->
-    <div class="hidden md:flex gap-4">
+    <div class="hidden md:flex gap-4" *ngIf="!isLogged">
       <a routerLink="/login">
         <button class="btn-ingresa">Ingresa</button>
       </a>
@@ -31,19 +31,27 @@
         <button class="btn-registro">Registrate</button>
       </a>
     </div>
+    <div class="hidden md:flex gap-4" *ngIf="isLogged">
+      <button class="btn-registro" (click)="volver()">Volver</button>
+    </div>
   </div>
 
   <!-- Menú móvil -->
   <div *ngIf="menuAbierto" class="md:hidden mt-4 space-y-2 text-center font-bree">
-    <a href="#" class="block">Inicio</a>
-    <a href="#" class="block">Ecosistema</a>
-    <a href="#" class="block">Acerca de nosotros</a>
-    <a routerLink="/login">
-      <button class="btn-ingresa w-full mt-2">Ingresa</button>
-    </a>
-    <a routerLink="/register">
-      <button class="btn-registro w-full">Registrate</button>
-    </a>
+    <a (click)="scrollTo('intro-section')" class="block">Inicio</a>
+    <a (click)="scrollTo('ecosistema-section')" class="block">Ecosistema</a>
+    <a (click)="scrollTo('acerca-section')" class="block">Acerca de nosotros</a>
+    <ng-container *ngIf="!isLogged; else volverMobile">
+      <a routerLink="/login">
+        <button class="btn-ingresa w-full mt-2">Ingresa</button>
+      </a>
+      <a routerLink="/register">
+        <button class="btn-registro w-full">Registrate</button>
+      </a>
+    </ng-container>
+    <ng-template #volverMobile>
+      <button class="btn-registro w-full mt-2" (click)="volver()">Volver</button>
+    </ng-template>
   </div>
 </header>
 
@@ -51,7 +59,7 @@
 
 <main class="home-main">
   <section class="intro-section">
-    <div class="intro-text">
+    <div class="intro-text" id="intro-section">
       <h1 class="intro-title">“La música nos une, nosotros la conectamos”</h1>
       <p class="intro-paragraph">MusiConnect es una plataforma web creada para revolucionar la manera en que los músicos se descubren, colaboran y crecen juntos. Buscamos impulsar el talento artístico construyendo un ecosistema digital inclusivo, donde cada músico, sin importar su nivel, pueda encontrar su lugar, formar conexiones reales y brillar en comunidad.</p>
     </div>
@@ -61,7 +69,7 @@
   </section>
 
 
-  <section class="funcionalidades py-16">
+  <section class="funcionalidades py-16" id="ecosistema-section">
     <div class="text-center max-w-2xl mx-auto mb-12 px-4">
       <p class="text-base">Creamos herramientas diseñadas para potenciar cada etapa del camino musical: desde el primer ensayo hasta tu próxima colaboración estelar.</p>
     </div>
@@ -84,7 +92,7 @@
     </div>
   </section>
 
-  <section class="acerca-de">
+  <section class="acerca-de" id="acerca-section">
     <h2>Acerca de nosotros</h2>
     <div class="acerca-content">
       <img src="/Nosotros.png" alt="Equipo" />

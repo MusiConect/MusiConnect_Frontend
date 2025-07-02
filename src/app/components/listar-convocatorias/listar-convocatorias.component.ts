@@ -5,6 +5,7 @@ import { ConvocationResponse } from '../../models/convocation.model';
 import { ConvocationService } from '../../services/convocation.service';
 import { SessionService } from '../../services/session.service';
 import { Router } from '@angular/router';
+import { HasRoleDirective } from '../../directives/has-role.directive';
 
 interface CardConvocation extends ConvocationResponse {
     esFavorita: boolean;
@@ -16,7 +17,7 @@ interface CardConvocation extends ConvocationResponse {
 @Component({
     selector: 'app-listar-convocatorias',
     standalone: true,
-    imports: [CommonModule, RouterModule],
+    imports: [CommonModule, RouterModule, HasRoleDirective],
     templateUrl: './listar-convocatorias.component.html',
     styleUrl: './listar-convocatorias.component.css'
 })
