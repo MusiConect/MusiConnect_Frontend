@@ -9,11 +9,12 @@ import { BandResponse } from '../../models/band.model';
 import { FollowCreate, UnfollowRequest } from '../../models/follow.model';
 import { finalize } from 'rxjs/operators';
 import { BandSidebarComponent } from '../band-sidebar/band-sidebar.component';
+import { HasRoleDirective } from '../../directives/has-role.directive';
 
 @Component({
   selector: 'app-listar-bandas',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, BandSidebarComponent],
+  imports: [CommonModule, ReactiveFormsModule, BandSidebarComponent, HasRoleDirective],
   templateUrl: './listar-bandas.component.html',
   styleUrls: ['./listar-bandas.component.css']
 })

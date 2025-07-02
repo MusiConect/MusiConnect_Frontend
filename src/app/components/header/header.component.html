@@ -53,16 +53,16 @@
           Crear ▼
         </button>
         <ul *ngIf="showCrear" class="absolute z-10 bg-white text-black rounded shadow-md mt-2 w-40">
-          <li>
-            <a routerLink="/crear-colaboracion" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-200">Colaboracion</a>
+          <li *appHasRole="'MUSICO'">
+            <a routerLink="/crear-colaboracion" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-200">Colaboración</a>
           </li>
-          <li>
+          <li *appHasRole="'PRODUCTOR'">
             <a routerLink="/crear-convocatoria" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-200">Convocatoria</a>
           </li>
           <li>
-            <a routerLink="/crear-publicacion" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-200">Publicacion</a>
+            <a routerLink="/crear-publicacion" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-200">Publicación</a>
           </li>
-          <li>
+          <li *appHasRole="'PRODUCTOR'">
             <a routerLink="/crear-banda" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-200">Banda</a>
           </li>
         </ul>
@@ -131,10 +131,10 @@
         <span>▼</span>
       </button>
       <ul *ngIf="showCrear" class="ml-4 mt-1 space-y-1">
-        <li><a routerLink="/crear-colaboracion" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Colaboración</a></li>
-        <li><a routerLink="/crear-convocatoria" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Convocatoria</a></li>
+        <li *appHasRole="'MUSICO'"><a routerLink="/crear-colaboracion" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Colaboración</a></li>
+        <li *appHasRole="'PRODUCTOR'"><a routerLink="/crear-convocatoria" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Convocatoria</a></li>
         <li><a routerLink="/crear-publicacion" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Publicación</a></li>
-        <li><a routerLink="/crear-banda" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Banda</a></li>
+        <li *appHasRole="'PRODUCTOR'"><a routerLink="/crear-banda" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-700 rounded">Banda</a></li>
       </ul>
     </div>
 

@@ -7,11 +7,12 @@ import { SessionService } from '../../services/session.service';
 import { BandUpdateRequest, BandResponse } from '../../models/band.model';
 import { finalize } from 'rxjs/operators';
 import { BandSidebarComponent } from '../band-sidebar/band-sidebar.component';
+import { HasRoleDirective } from '../../directives/has-role.directive';
 
 @Component({
   selector: 'app-editar-banda',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, BandSidebarComponent],
+  imports: [CommonModule, ReactiveFormsModule, BandSidebarComponent, HasRoleDirective],
   templateUrl: './editar-banda.component.html',
   styleUrls: ['./editar-banda.component.css']
 })
